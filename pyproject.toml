@@ -1,15 +1,22 @@
 [project]
 name = "babi"
 version = "0.1.0"
-description = "Behavioral ABI measurement CLI: MCP protocol collection and sandbox-manifest policy checks."
+description = "MCP behavioral measurement, evidence, and contract tooling."
+readme = "README.md"
+license = "MIT"
+license-files = ["LICENSE"]
 authors = [
-    { name = "Aktan Azat", email = "68118715+aktanazat@users.noreply.github.com" }
+    { name = "Aktan Azat" }
 ]
 requires-python = ">=3.13"
 dependencies = [
     "mcp>=2.0.0",
     "pydantic>=2.13.4",
 ]
+
+[project.urls]
+Repository = "https://github.com/aktanazat/behavioral-abi"
+Issues = "https://github.com/aktanazat/behavioral-abi/issues"
 
 [project.scripts]
 babi = "babi:main"
