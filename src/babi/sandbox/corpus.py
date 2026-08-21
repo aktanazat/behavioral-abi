@@ -60,7 +60,7 @@ class Corpus(BaseModel):
     entries: list[CorpusEntry] = Field(min_length=20, max_length=20)
 
     @model_validator(mode="after")
-    def _ranks_are_exactly_one_through_twenty(self) -> "Corpus":
+    def _ranks_are_exactly_one_through_twenty(self) -> Corpus:
         ranks = sorted(entry.rank for entry in self.entries)
         if ranks != list(range(1, 21)):
             raise ValueError(f"corpus ranks must be exactly 1..20 with no gaps or duplicates, got {ranks}")

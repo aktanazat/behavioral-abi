@@ -108,7 +108,7 @@ class Registry:
         with self._lock:
             self._conn.close()
 
-    def __enter__(self) -> "Registry":
+    def __enter__(self) -> Registry:
         return self
 
     def __exit__(self, *exc_info: object) -> None:

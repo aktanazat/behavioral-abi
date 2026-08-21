@@ -55,7 +55,7 @@ class Signature:
         return obj
 
     @staticmethod
-    def from_json(obj: Json) -> "Signature":
+    def from_json(obj: Json) -> Signature:
         if not isinstance(obj, dict) or not isinstance(obj.get("sig"), str):
             raise DsseError(f"not a DSSE signature entry: {obj!r}")
         keyid = obj.get("keyid")
@@ -86,7 +86,7 @@ class Envelope:
         }
 
     @staticmethod
-    def from_json(obj: Json) -> "Envelope":
+    def from_json(obj: Json) -> Envelope:
         if not isinstance(obj, dict):
             raise DsseError(f"not a DSSE envelope: {obj!r}")
         payload_b64 = obj.get("payload")

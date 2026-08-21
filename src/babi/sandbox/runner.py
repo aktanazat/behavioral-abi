@@ -106,7 +106,7 @@ class CorpusRunDenominator(BaseModel):
     tools_inconclusive: int = Field(ge=0)
 
     @model_validator(mode="after")
-    def _arithmetic_is_exact(self) -> "CorpusRunDenominator":
+    def _arithmetic_is_exact(self) -> CorpusRunDenominator:
         target_sum = self.targets_discovered + self.targets_credentials_unavailable + self.targets_discover_failed
         if target_sum != self.targets_total:
             raise ValueError(

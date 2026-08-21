@@ -55,8 +55,8 @@ class FieldSchema:
     max_length: int | None
     min_items: int | None
     max_items: int | None
-    items: "FieldSchema | None"
-    properties: tuple["FieldSchema", ...]
+    items: FieldSchema | None
+    properties: tuple[FieldSchema, ...]
     description: str | None
     value_category: ValueCategory
     binding_key: str

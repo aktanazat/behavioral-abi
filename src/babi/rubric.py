@@ -160,7 +160,7 @@ class Top20Corpus(BaseModel):
     evidence_digest: str | None = None
 
     @model_validator(mode="after")
-    def _valid_calls_within_population(self) -> "Top20Corpus":
+    def _valid_calls_within_population(self) -> Top20Corpus:
         if self.valid_first_calls > self.sandbox_eligible_tool_schemas:
             raise ValueError("valid_first_calls cannot exceed sandbox_eligible_tool_schemas")
         return self
@@ -186,7 +186,7 @@ class FindingsSummary(BaseModel):
     evidence_digest: str | None = None
 
     @model_validator(mode="after")
-    def _counts_are_internally_consistent(self) -> "FindingsSummary":
+    def _counts_are_internally_consistent(self) -> FindingsSummary:
         if self.consequential_findings > self.total_findings:
             raise ValueError("consequential_findings cannot exceed total_findings")
         if self.reproduced_three_clean_runs > self.consequential_findings:
@@ -213,7 +213,7 @@ class OperationSpecificLogicAudit(BaseModel):
     evidence_digest: str | None = None
 
     @model_validator(mode="after")
-    def _numerator_within_denominator(self) -> "OperationSpecificLogicAudit":
+    def _numerator_within_denominator(self) -> OperationSpecificLogicAudit:
         if self.plans_needing_human_written_value > self.successful_probe_plans:
             raise ValueError(
                 "plans_needing_human_written_value cannot exceed successful_probe_plans"

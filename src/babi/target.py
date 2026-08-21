@@ -27,7 +27,7 @@ class TargetSpec(BaseModel):
     package_or_endpoint: str
 
     @model_validator(mode="after")
-    def _exactly_one_transport_target(self) -> "TargetSpec":
+    def _exactly_one_transport_target(self) -> TargetSpec:
         if (self.command is None) == (self.endpoint is None):
             raise ValueError("exactly one of `command` or `endpoint` must be set")
         return self
