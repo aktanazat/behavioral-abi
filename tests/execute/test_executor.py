@@ -1,13 +1,4 @@
-"""Executor acceptance tests against the in-process stateful fake MCP server
-(`conftest.build_stateful_server`).
-
-These are the tests the assignment's acceptance bar names directly: a
-duplicate-creation handler must classify as `observed_false` idempotency, a
-deduping handler as `observed_true`, an absent effect-observer as
-`inconclusive`, ancillary (non-effect) evidence must never flip the
-verdict, and an interrupt attempt that never actually takes hold must
-likewise stay `inconclusive` rather than being inferred either way.
-"""
+"""Executor acceptance tests against the in-process stateful MCP server."""
 
 from __future__ import annotations
 

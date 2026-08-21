@@ -1,32 +1,4 @@
-"""Plan builder: deterministic-pass-only `ProbePlan` assembly.
-
-Composes `schema.py` (catalog analysis), `values.py` (seeded argument
-synthesis), and `dependencies.py` (candidate edges) into one `ProbePlan`
-per discovered server -- and enforces IMPLEMENTATION-PLAN.md's executor
-gate at the one place it can be enforced before any tool is ever called:
-
-    Do not run repeat, interrupt, concurrent, or inverse probes without a
-    working observer and disposable scope. An LLM does not waive this
-    gate.
-
-With no observer and no disposable scope declared (`PlanBuilderConstraints()`,
-the all-defaults case -- exactly the Day 3-4 corpus-run situation, before
-any observer exists), `build_probe_plan` emits only `DISCOVER`,
-`INSTANTIATE`, and `CALL_ONCE` steps: the "first iteration emits
-CALL_ONCE-only valid-call plans" bar Days 3-4 must clear.
-
-`eligible_primitives` computes the gate for the full twelve-primitive
-vocabulary generically (every primitive `plan.py` defines), so it is ready
-for whichever slice adds `BOUNDARY_MUTATION_FUZZ`/`CROSS_CALL_CONSISTENCY`/
-`PRECONDITION_REVOCATION` scheduling (Day 7-10 material with no settled
-step-parameter contract yet). `_add_tool_steps` currently only assembles
-steps for the primitives IMPLEMENTATION-PLAN.md's default pipeline names
-(`DISCOVER -> INSTANTIATE -> CALL_ONCE -> READ_BACK -> [REPEAT |
-RETRY_AFTER_INTERRUPT | PARALLEL_DOUBLE_FIRE] -> VERIFY_WITH_TIMING ->
-PERTURB_AND_UNDO`) plus the gate itself -- inventing an unreviewed
-parameter shape for the remaining three primitives here would risk
-contradicting whatever the slice that actually executes them settles on.
-"""
+"""Build deterministic probe plans under run-wide safety gates."""
 
 from __future__ import annotations
 
@@ -41,9 +13,8 @@ from babi.planner.heuristics import OperationClass
 from babi.planner.schema import CatalogEntry, analyze_catalog
 from babi.planner.values import DEFAULT_RESOURCE_PREFIX, TypedBindings, synthesize_arguments
 
-# IMPLEMENTATION-PLAN.md, "### Executor": gate exactly these four primitive
-# families behind a working observer + disposable scope, plus the two
-# later (Day 7-10) primitives that also issue extra, non-CALL_ONCE calls.
+# Effect-amplifying probes require an observer. Mutations also require a
+# disposable scope.
 _REQUIRES_OBSERVER: frozenset[ProbePrimitive] = frozenset(
     {
         ProbePrimitive.READ_BACK,
@@ -72,17 +43,10 @@ _MIN_CANDIDATE_SCORE = 0.3
 
 @dataclass(frozen=True, slots=True)
 class PlanBuilderConstraints:
-    """Operational facts the plan builder gates on -- never a per-tool
-    fact, always about the run as a whole. `observer_kinds` names which of
-    the generic local instrumented-server observers (IMPLEMENTATION-PLAN.md
-    `### Observers`: filesystem/process/network/container diffing,
-    stderr+exit capture) are actually wired up; `read_back_available`
-    additionally covers the black-box case where the *only* oracle is a
-    sibling tool call (no local instrumentation at all, e.g. a pure remote
-    API target). Either kind of observer satisfies the gate.
-    `disposable_scope` reflects RUBRIC.md's "Generic risk policy based on
-    ... presence of a read-back oracle" allowance -- a plain caller-supplied
-    fact about the sandboxed account/environment, not inferred here."""
+    """Run-wide observer and disposable-scope facts.
+
+    These constraints describe the sandbox, never a specific tool.
+    """
 
     observer_kinds: frozenset[str] = field(default_factory=frozenset)
     read_back_available: bool = False

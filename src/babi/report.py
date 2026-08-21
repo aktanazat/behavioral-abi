@@ -1,24 +1,4 @@
-"""Deterministic report renderer: population method, claimed-versus-observed
-matrix, discrepancy-class separation, minimal reproducer/evidence links,
-false-positive/inconclusive counts, method limits, and a Glama comparison
-slot -- the Day 13 report deliverable from `IMPLEMENTATION-PLAN.md`.
-
-Rendering is a pure function of a `ReportInput`: the same input always
-produces byte-identical Markdown and canonical JSON. There is no wall-clock
-read, network call, model call, or non-deterministic ordering in this
-module; every timestamp is caller-supplied and every list is sorted before
-rendering.
-
-Empirical discipline: a finding's `provenance` records whether it came from
-actually executing the target (`stateful_black_box`, `local_instrumented`)
-or from reading source/schema without execution (`static_source_review`,
-`schema_static_analysis`). Only empirical findings count toward the
-headline unsafe-false-positive number and the default title computation --
-`IMPLEMENTATION-PLAN.md` is explicit that "a model's unsupported judgment"
-and "source-code-derived behavior claims" must never stand in for the
-executed verdict. Non-empirical findings are still reported, but always
-under their own label, never folded into the empirical count.
-"""
+"""Render deterministic reports while keeping static and empirical findings separate."""
 
 from __future__ import annotations
 
