@@ -1,0 +1,29 @@
+[project]
+name = "babi"
+version = "0.1.0"
+description = "Behavioral ABI measurement CLI: MCP protocol collection and sandbox-manifest policy checks."
+authors = [
+    { name = "Aktan Azat", email = "68118715+aktanazat@users.noreply.github.com" }
+]
+requires-python = ">=3.13"
+dependencies = [
+    "mcp>=2.0.0",
+    "pydantic>=2.13.4",
+]
+
+[project.scripts]
+babi = "babi:main"
+
+[build-system]
+requires = ["uv_build>=0.11.12,<0.12.0"]
+build-backend = "uv_build"
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths = ["tests"]
+
+[dependency-groups]
+dev = [
+    "pytest>=9.1.1",
+    "pytest-asyncio>=1.4.0",
+]
