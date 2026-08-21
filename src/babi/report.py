@@ -27,7 +27,7 @@ from enum import Enum
 from pydantic import BaseModel, ConfigDict, Field
 
 from babi import canon
-from babi.classify import BehaviorClassification, DiscrepancyClass, PropertyClaim, PropertyStatus
+from babi.classify import BehaviorClassification, DiscrepancyClass, PropertyStatus
 from babi.rubric import RubricEvaluation, RubricOutcome
 
 DEFAULT_TITLE = (

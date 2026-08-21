@@ -19,7 +19,6 @@ from mcp.client import Client
 from babi.classify import PropertyStatus, classify_idempotency
 from babi.evidence import EvidenceStore
 from babi.execute import execute_plan
-from babi.execute.wire import dump_model
 from babi.history import InvocationStatus, ObservationStatus, history_digest
 from babi.observe import observe_count_digest
 from babi.plan import DependencyEdge, ProbePlan, ProbePrimitive, ProbeStep, RationaleEntry, RationaleProvenance

@@ -10,7 +10,6 @@ from babi.report import (
     FindingRecord,
     GlamaComparisonRow,
     PopulationMethod,
-    Report,
     ReportInput,
     VendorAnnotations,
     build_report,

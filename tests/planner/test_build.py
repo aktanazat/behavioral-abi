@@ -286,7 +286,6 @@ def test_typed_bindings_wire_create_output_identifier_into_later_tool_input() ->
     identifier-shaped input (both share the same binding_key) -- fully
     deterministic, no live execution required."""
     plan = build_probe_plan(_SERVER_SUBJECT, _CATALOG, _SUBJECTS, seed="v0")
-    make_call = next(s for s in plan.steps if s.tool_subject == _SUBJECTS["make_widget"] and s.primitive is ProbePrimitive.CALL_ONCE)
     fetch_call = next(s for s in plan.steps if s.tool_subject == _SUBJECTS["fetch_widget"] and s.primitive is ProbePrimitive.CALL_ONCE)
     remove_call = next(s for s in plan.steps if s.tool_subject == _SUBJECTS["remove_widget"] and s.primitive is ProbePrimitive.CALL_ONCE)
     # make_widget has no identifier-shaped input itself, so there is no
