@@ -1,0 +1,142 @@
+{
+  "outcome": "kill",
+  "pass_conditions": [
+    {
+      "condition_id": "three_sandboxes",
+      "status": "not_satisfied",
+      "detail": "at least one of the three named sandboxes did not execute",
+      "numerator": 2.0,
+      "denominator": 3.0,
+      "evidence_digests": [
+        "sha256:a3e690a3db4ef69f3d9c03c848f99571654a92fd83865cf625032d84fa9a1a10",
+        "sha256:a770855ef63f6e88b18f98770a5527a4c64563fa03768d2aebb2f986e7e6a37e"
+      ]
+    },
+    {
+      "condition_id": "top20_corpus",
+      "status": "not_satisfied",
+      "detail": "12/20 servers run, inclusion_rules_published=True, popularity_evidence_published=True",
+      "numerator": 12.0,
+      "denominator": 20.0,
+      "evidence_digests": [
+        "sha256:f5e793fddd971eab852ce81d46be502e661a940b5994e367b97238d246ae1121"
+      ]
+    },
+    {
+      "condition_id": "consequential_and_reproduced",
+      "status": "not_satisfied",
+      "detail": "0 consequential findings (need >=5), 0 reproduced 3x clean (need >=4)",
+      "numerator": 0.0,
+      "denominator": 0.0,
+      "evidence_digests": [
+        "sha256:c89c954d04ea7abf027d4612fcdbb81fc99f47829fb987a27ef62ec782d78726"
+      ]
+    },
+    {
+      "condition_id": "stateful_black_box",
+      "status": "not_satisfied",
+      "detail": "0 reproduced findings from stateful black-box execution (need >=3)",
+      "numerator": 0.0,
+      "denominator": 3.0,
+      "evidence_digests": [
+        "sha256:c89c954d04ea7abf027d4612fcdbb81fc99f47829fb987a27ef62ec782d78726"
+      ]
+    },
+    {
+      "condition_id": "no_operation_specific_code",
+      "status": "satisfied",
+      "detail": "0 no-per-tool-logic lint violation(s)",
+      "numerator": 0.0,
+      "denominator": 0.0,
+      "evidence_digests": [
+        "sha256:a82b7e78e02bd45691bb9de63cfc71bafc94897906ed8921eb5ec3a8fb6d66d3"
+      ]
+    },
+    {
+      "condition_id": "runtime_hook_demo",
+      "status": "satisfied",
+      "detail": "hook_blocked_or_rewrote_unsafe_retry=True",
+      "numerator": null,
+      "denominator": null,
+      "evidence_digests": [
+        "sha256:12bd8f1a8a761f09db9397c302422c6612e415ba048587bed96fb0163a028f61"
+      ]
+    },
+    {
+      "condition_id": "full_evidence_chain",
+      "status": "satisfied",
+      "detail": "1/1 public findings link the full evidence chain",
+      "numerator": 1.0,
+      "denominator": 1.0,
+      "evidence_digests": [
+        "sha256:c89c954d04ea7abf027d4612fcdbb81fc99f47829fb987a27ef62ec782d78726"
+      ]
+    }
+  ],
+  "kill_conditions": [
+    {
+      "condition_id": "human_intervention_rate",
+      "status": "not_triggered",
+      "detail": "0/2 successful probe plans needed a human-written value (0.0%, kill if >10%)",
+      "numerator": 0.0,
+      "denominator": 2.0,
+      "evidence_digests": [
+        "sha256:a82b7e78e02bd45691bb9de63cfc71bafc94897906ed8921eb5ec3a8fb6d66d3"
+      ]
+    },
+    {
+      "condition_id": "planner_valid_call_rate",
+      "status": "triggered",
+      "detail": "7/37 sandbox-eligible tool schemas got a valid first call (18.9%, kill if <70%)",
+      "numerator": 7.0,
+      "denominator": 37.0,
+      "evidence_digests": [
+        "sha256:f5e793fddd971eab852ce81d46be502e661a940b5994e367b97238d246ae1121"
+      ]
+    },
+    {
+      "condition_id": "insufficient_consequential_findings",
+      "status": "pending",
+      "detail": "finding-count kill gate waits for all three sandboxes and the 20-server corpus",
+      "numerator": null,
+      "denominator": null,
+      "evidence_digests": []
+    },
+    {
+      "condition_id": "insufficient_reproduced_findings",
+      "status": "pending",
+      "detail": "reproduction-count kill gate waits for all three sandboxes and the 20-server corpus",
+      "numerator": null,
+      "denominator": null,
+      "evidence_digests": []
+    },
+    {
+      "condition_id": "non_consequential_majority",
+      "status": "pending",
+      "detail": "non-consequential-majority gate waits for findings and full probe coverage",
+      "numerator": null,
+      "denominator": null,
+      "evidence_digests": [
+        "sha256:c89c954d04ea7abf027d4612fcdbb81fc99f47829fb987a27ef62ec782d78726"
+      ]
+    },
+    {
+      "condition_id": "equivalent_competitor_service",
+      "status": "not_triggered",
+      "detail": "equivalent_service_exists=False",
+      "numerator": null,
+      "denominator": null,
+      "evidence_digests": []
+    },
+    {
+      "condition_id": "policy_requires_provider_logic",
+      "status": "not_triggered",
+      "detail": "decision_required_provider_specific_logic=False",
+      "numerator": null,
+      "denominator": null,
+      "evidence_digests": [
+        "sha256:12bd8f1a8a761f09db9397c302422c6612e415ba048587bed96fb0163a028f61"
+      ]
+    }
+  ]
+}

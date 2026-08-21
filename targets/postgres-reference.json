@@ -1,0 +1,21 @@
+{
+  "name": "postgres-reference",
+  "transport": "stdio",
+  "command": [
+    "docker",
+    "run",
+    "--rm",
+    "-i",
+    "--network",
+    "babi-postgres-sandbox",
+    "node:22-alpine",
+    "npx",
+    "-y",
+    "@modelcontextprotocol/server-postgres",
+    "postgresql://postgres@babi-postgres-sandbox:5432/postgres"
+  ],
+  "args": [],
+  "env_vars": [],
+  "network": "bridge",
+  "package_or_endpoint": "@modelcontextprotocol/server-postgres"
+}

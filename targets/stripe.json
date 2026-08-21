@@ -1,0 +1,24 @@
+{
+  "name": "stripe",
+  "transport": "stdio",
+  "command": [
+    "docker",
+    "run",
+    "--rm",
+    "-i",
+    "--network",
+    "bridge",
+    "-e",
+    "STRIPE_SECRET_KEY",
+    "node:22-alpine",
+    "npx",
+    "-y",
+    "@stripe/mcp"
+  ],
+  "args": [],
+  "env_vars": [
+    "STRIPE_SECRET_KEY"
+  ],
+  "network": "bridge",
+  "package_or_endpoint": "@stripe/mcp"
+}

@@ -1,0 +1,22 @@
+{
+  "name": "chrome-devtools",
+  "transport": "stdio",
+  "command": [
+    "docker",
+    "run",
+    "--rm",
+    "-i",
+    "--network",
+    "bridge",
+    "node:22-alpine",
+    "npx",
+    "-y",
+    "chrome-devtools-mcp",
+    "--headless",
+    "--isolated"
+  ],
+  "args": [],
+  "env_vars": [],
+  "network": "bridge",
+  "package_or_endpoint": "chrome-devtools-mcp"
+}

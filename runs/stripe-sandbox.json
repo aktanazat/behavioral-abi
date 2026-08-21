@@ -1,0 +1,11 @@
+{
+  "target_label": "stripe-test-mode",
+  "account_id": "acct_1Tnld5HooSxt57lc",
+  "region": null,
+  "resource_prefix": "babi-stripe-test-",
+  "spend_limit": 0,
+  "teardown_deadline": "2026-08-22T00:00:00Z",
+  "credential_env_vars": [
+    "STRIPE_SECRET_KEY"
+  ]
+}

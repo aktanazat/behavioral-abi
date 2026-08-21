@@ -1,0 +1,12 @@
+{
+  "target_label": "github-disposable-repo",
+  "account_id": null,
+  "region": null,
+  "resource_prefix": "babi-gh-",
+  "spend_limit": 0,
+  "teardown_deadline": null,
+  "credential_env_vars": [
+    "GITHUB_PERSONAL_ACCESS_TOKEN",
+    "GH_TOKEN"
+  ]
+}

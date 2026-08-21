@@ -1,0 +1,8 @@
+{
+  "registry_url": "http://127.0.0.1:8765",
+  "subjects": {
+    "create_record": "sha256:3d2cb3619d47c78bf1bffd79c67ef6d2b790600cf322e0a8224061c11c6d0fe1"
+  },
+  "intent": "retry",
+  "timeout": 5
+}

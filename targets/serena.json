@@ -1,0 +1,22 @@
+{
+  "name": "serena",
+  "transport": "stdio",
+  "command": [
+    "docker",
+    "run",
+    "--rm",
+    "-i",
+    "--network",
+    "bridge",
+    "ghcr.io/astral-sh/uv:python3.13-bookworm-slim",
+    "uvx",
+    "--from",
+    "serena-agent",
+    "serena",
+    "start-mcp-server"
+  ],
+  "args": [],
+  "env_vars": [],
+  "network": "bridge",
+  "package_or_endpoint": "serena-agent"
+}

@@ -1,0 +1,11 @@
+{
+  "target_label": "cloudflare-free-tier",
+  "account_id": null,
+  "region": null,
+  "resource_prefix": "babi-cf-",
+  "spend_limit": 0,
+  "teardown_deadline": null,
+  "credential_env_vars": [
+    "CLOUDFLARE_API_TOKEN"
+  ]
+}

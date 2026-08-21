@@ -1,0 +1,20 @@
+{
+  "name": "context7",
+  "transport": "stdio",
+  "command": [
+    "docker",
+    "run",
+    "--rm",
+    "-i",
+    "--network",
+    "bridge",
+    "node:22-alpine",
+    "npx",
+    "-y",
+    "@upstash/context7-mcp"
+  ],
+  "args": [],
+  "env_vars": [],
+  "network": "bridge",
+  "package_or_endpoint": "@upstash/context7-mcp"
+}

@@ -1,0 +1,22 @@
+{
+  "name": "notion",
+  "transport": "stdio",
+  "command": [
+    "docker",
+    "run",
+    "--rm",
+    "-i",
+    "--network",
+    "bridge",
+    "node:22-alpine",
+    "npx",
+    "-y",
+    "@notionhq/notion-mcp-server"
+  ],
+  "args": [],
+  "env_vars": [
+    "NOTION_TOKEN"
+  ],
+  "network": "bridge",
+  "package_or_endpoint": "@notionhq/notion-mcp-server"
+}

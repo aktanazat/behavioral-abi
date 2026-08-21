@@ -1,0 +1,21 @@
+{
+  "name": "github",
+  "transport": "stdio",
+  "command": [
+    "docker",
+    "run",
+    "--rm",
+    "-i",
+    "--network",
+    "bridge",
+    "-e",
+    "GITHUB_PERSONAL_ACCESS_TOKEN",
+    "ghcr.io/github/github-mcp-server"
+  ],
+  "args": [],
+  "env_vars": [
+    "GITHUB_PERSONAL_ACCESS_TOKEN"
+  ],
+  "network": "bridge",
+  "package_or_endpoint": "ghcr.io/github/github-mcp-server"
+}

@@ -1,0 +1,23 @@
+{
+  "name": "slack",
+  "transport": "stdio",
+  "command": [
+    "docker",
+    "run",
+    "--rm",
+    "-i",
+    "--network",
+    "bridge",
+    "node:22-alpine",
+    "npx",
+    "-y",
+    "slack-mcp-server"
+  ],
+  "args": [],
+  "env_vars": [
+    "SLACK_BOT_TOKEN",
+    "SLACK_TEAM_ID"
+  ],
+  "network": "bridge",
+  "package_or_endpoint": "slack-mcp-server"
+}

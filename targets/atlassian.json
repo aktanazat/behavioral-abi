@@ -1,0 +1,26 @@
+{
+  "name": "atlassian",
+  "transport": "stdio",
+  "command": [
+    "docker",
+    "run",
+    "--rm",
+    "-i",
+    "--network",
+    "bridge",
+    "ghcr.io/astral-sh/uv:python3.13-bookworm-slim",
+    "uvx",
+    "mcp-atlassian"
+  ],
+  "args": [],
+  "env_vars": [
+    "JIRA_URL",
+    "JIRA_USERNAME",
+    "JIRA_API_TOKEN",
+    "CONFLUENCE_URL",
+    "CONFLUENCE_USERNAME",
+    "CONFLUENCE_API_TOKEN"
+  ],
+  "network": "bridge",
+  "package_or_endpoint": "mcp-atlassian"
+}

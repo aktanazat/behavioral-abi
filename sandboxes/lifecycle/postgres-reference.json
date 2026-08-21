@@ -1,0 +1,15 @@
+{
+  "target_label": "postgres-reference",
+  "setup_command": [
+    "sh",
+    "-c",
+    "docker network create babi-postgres-sandbox >/dev/null 2>&1 || true; docker run -d --rm --name babi-postgres-sandbox --network babi-postgres-sandbox -e POSTGRES_HOST_AUTH_METHOD=trust -e POSTGRES_USER=postgres postgres:16-alpine >/dev/null; for i in $(seq 1 60); do docker exec babi-postgres-sandbox pg_isready -U postgres >/dev/null 2>&1 && exit 0; sleep 1; done; echo 'postgres never became ready' >&2; exit 1"
+  ],
+  "teardown_command": [
+    "sh",
+    "-c",
+    "docker rm -f babi-postgres-sandbox >/dev/null 2>&1 || true; docker network rm babi-postgres-sandbox >/dev/null 2>&1 || true; exit 0"
+  ],
+  "env_vars": [],
+  "timeout_seconds": 90
+}

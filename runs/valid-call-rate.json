@@ -1,0 +1,458 @@
+{
+  "kind": "valid-call-measurement/v0",
+  "targets": [
+    {
+      "results": [
+        {
+          "accepted": false,
+          "arguments_digest": "sha256:8a2f3eee41f6d82fcb1b83d8e1ce3f15189e4a685597e28460014c5ebf61cdc4",
+          "error": "MCP tool result has isError=true",
+          "tool_subject": "sha256:dec1e838b032299f3e819a2aa27336f35181dc8f8131045cd9726809aa0d9bee"
+        },
+        {
+          "accepted": false,
+          "arguments_digest": "sha256:8a2f3eee41f6d82fcb1b83d8e1ce3f15189e4a685597e28460014c5ebf61cdc4",
+          "error": "MCP tool result has isError=true",
+          "tool_subject": "sha256:e02d119d3676721028c28bca01700c9fa4a9c0b5b3dc69dd1d24f0cc087662e1"
+        },
+        {
+          "accepted": false,
+          "arguments_digest": "sha256:9a2c181ce2f4b7dbe625d8244e2bc98aee74ba085959b1c38b27791eb3a7ebfb",
+          "error": "MCP tool result has isError=true",
+          "tool_subject": "sha256:3daaf2a95b0ef0a2fa815518e812b57abaa8061c897ac3910526154c6f411b88"
+        },
+        {
+          "accepted": false,
+          "arguments_digest": "sha256:8a2f3eee41f6d82fcb1b83d8e1ce3f15189e4a685597e28460014c5ebf61cdc4",
+          "error": "MCP tool result has isError=true",
+          "tool_subject": "sha256:f39f11ab3cdb44b77acc0066123959ca2fcaa78c6aba37ecd2e75cd78f742d05"
+        },
+        {
+          "accepted": true,
+          "arguments_digest": "sha256:44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+          "error": null,
+          "tool_subject": "sha256:d16a208c6672184c6e6a6973c2756b1e9fa5204e92608dd7feb887d0db12fd49"
+        },
+        {
+          "accepted": false,
+          "arguments_digest": "sha256:8a2f3eee41f6d82fcb1b83d8e1ce3f15189e4a685597e28460014c5ebf61cdc4",
+          "error": "MCP tool result has isError=true",
+          "tool_subject": "sha256:dcecadbea3933383a341b0799ccbdda52c37e3ccba2d25ac9b4e811958d8b1f9"
+        },
+        {
+          "accepted": false,
+          "arguments_digest": "sha256:8a2f3eee41f6d82fcb1b83d8e1ce3f15189e4a685597e28460014c5ebf61cdc4",
+          "error": "MCP tool result has isError=true",
+          "tool_subject": "sha256:bdeedc0ce021c149e9f7f46d2cbe7f2021f2ebc6ab20174b47e52d91488f38ef"
+        },
+        {
+          "accepted": false,
+          "arguments_digest": "sha256:58c78403fc7f4e1a02ccacdbbff2cd43126f9812bfa71fdb2b6f568df5448943",
+          "error": "MCP tool result has isError=true",
+          "tool_subject": "sha256:ef13516ff3abced5ba5e052a1dfec006ec4ab888184d6ba356fa3b69c5ba3b82"
+        },
+        {
+          "accepted": false,
+          "arguments_digest": "sha256:8a2f3eee41f6d82fcb1b83d8e1ce3f15189e4a685597e28460014c5ebf61cdc4",
+          "error": "MCP tool result has isError=true",
+          "tool_subject": "sha256:de7a4d1b8d6df678ab0f9665c5316f4bfd991e273e687d55768c694aa5747710"
+        },
+        {
+          "accepted": false,
+          "arguments_digest": "sha256:8a2f3eee41f6d82fcb1b83d8e1ce3f15189e4a685597e28460014c5ebf61cdc4",
+          "error": "MCP tool result has isError=true",
+          "tool_subject": "sha256:b1b8d20d110d5b65020ab2d2b36e609ca97ba2759c1c48d9f56e4ecf4ddbce73"
+        },
+        {
+          "accepted": true,
+          "arguments_digest": "sha256:aa2a0b8d78f840ef338d9c4d43ceb77ffde889442551ae281a8c09ae6cc92313",
+          "error": null,
+          "tool_subject": "sha256:51179ead96d987038c230ca2f9e693b1330f2d193453d7f327a34008d855fd64"
+        },
+        {
+          "accepted": false,
+          "arguments_digest": "sha256:8a2f3eee41f6d82fcb1b83d8e1ce3f15189e4a685597e28460014c5ebf61cdc4",
+          "error": "MCP tool result has isError=true",
+          "tool_subject": "sha256:ead9755e4f833632d6c5091608b4ed1a735664ea3bddab9fc0ea0d301ce8728f"
+        },
+        {
+          "accepted": false,
+          "arguments_digest": "sha256:14267a479ee5c3b18085725910af8b0975d0ff84188f32f3bbbd0754eb37920f",
+          "error": "MCP tool result has isError=true",
+          "tool_subject": "sha256:2cecad24ebe66300dee48cfc7d0afb0f09c8d4fa4b0efbceaa9f710b621dd362"
+        },
+        {
+          "accepted": false,
+          "arguments_digest": "sha256:42836c6ee27e00505e55d0f980a15ad7303591c92af62fdcf5da8451fe6b8366",
+          "error": "MCP tool result has isError=true",
+          "tool_subject": "sha256:ceefa5f00ea6750d6ff20b790f61181235dde8ab1b23d5c61a8ca1de0772de5d"
+        }
+      ],
+      "server_subject": "sha256:e5b8379dcf20b41ff07264644c2c5bacc96ffaa5b9929dafc1d22c09b8760b16",
+      "target": "filesystem",
+      "tools_accepted": 2,
+      "tools_attempted": 14,
+      "tools_invalid": 12
+    },
+    {
+      "results": [
+        {
+          "accepted": false,
+          "arguments_digest": "sha256:1003a02d9f92313848bfe6aaaab88a57895e788ec545f7fded31703d57e68637",
+          "error": "MCP tool result has isError=true",
+          "tool_subject": "sha256:60063d48050ad3305a26071733aaa33d65c01f6160436b03d686faa9f1ca755f"
+        },
+        {
+          "accepted": true,
+          "arguments_digest": "sha256:02cfda85c59ee50b28e44676c9355a02e0a7093536db2d43934eb25ec9c546a2",
+          "error": null,
+          "tool_subject": "sha256:d45fc094c5621a193664fc268695f56d89c5617478cd6adf5108e1a6107ce46e"
+        },
+        {
+          "accepted": true,
+          "arguments_digest": "sha256:68090a642935bb88971d665d318e43667f0e8fcf79dbcf595e17ea332aff9ba6",
+          "error": null,
+          "tool_subject": "sha256:f288cf7c1eb405e9c83755d7c70301d169499bb201f5917157dd6dabc4f61b04"
+        },
+        {
+          "accepted": true,
+          "arguments_digest": "sha256:cf4efda6ed04f26f89dcc60e3b268a7e21e782a4b397aebc44a53bf6b3201351",
+          "error": null,
+          "tool_subject": "sha256:d6e114a31f9a00ba3d4b01111d042f4ddce1e253b572266b248c8a1b16b26e63"
+        },
+        {
+          "accepted": true,
+          "arguments_digest": "sha256:e163966e31f162278b9a7483f5f898eb76fec840af91e6ad721881568a939ff4",
+          "error": null,
+          "tool_subject": "sha256:643629ebb8dc7fd5c79eedd1cdeeaa74d81b611f59a21f1440917fdd4ef1e23b"
+        },
+        {
+          "accepted": true,
+          "arguments_digest": "sha256:68090a642935bb88971d665d318e43667f0e8fcf79dbcf595e17ea332aff9ba6",
+          "error": null,
+          "tool_subject": "sha256:b4574f9ce76471dfffd2ab5ecc7166638b438c1f56560ca8b00ea89093ce650b"
+        },
+        {
+          "accepted": true,
+          "arguments_digest": "sha256:daf8acdbaa9dbc6b06a4aa106d41da24649abd2df63d1404cf7ea5ab8262d2d1",
+          "error": null,
+          "tool_subject": "sha256:c94d47beeec4cbcba5fc51bff8efe3e4cebc19bdb0c56dd4e95129f6e48db141"
+        },
+        {
+          "accepted": true,
+          "arguments_digest": "sha256:44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+          "error": null,
+          "tool_subject": "sha256:ab599714fbb7428fc36fa0fe4d7ff89850b818bd5a158b32e417f5c7dfe5c142"
+        },
+        {
+          "accepted": true,
+          "arguments_digest": "sha256:b61ee7ce615ef6bec70f0c5019c0e7cd6872b0f7cd0520deb5e71bad289b8728",
+          "error": null,
+          "tool_subject": "sha256:0e0c68a84efe088d5cf01dc0d818ad26a7abba0233ef4d81f708170c6008d7b8"
+        }
+      ],
+      "server_subject": "sha256:5981f9cda73646d6e0a7b99f3880ea645a95276302cb1cd75ec62346a0a54759",
+      "target": "memory",
+      "tools_accepted": 8,
+      "tools_attempted": 9,
+      "tools_invalid": 1
+    },
+    {
+      "results": [
+        {
+          "accepted": false,
+          "arguments_digest": "sha256:c2052cd94fe4a5f899a7a12895e69f023a4daa45d5c2299a5fbc51edc2b01461",
+          "error": "MCP tool result has isError=true",
+          "tool_subject": "sha256:489dd8192711075fcfb088c5f5962c4e6396ef9c7dbfac21935d60050b4f85e9"
+        }
+      ],
+      "server_subject": "sha256:72c5008e49dab398308decce5eb2019a9b212bffb34c8ae65769ee7bc6be5292",
+      "target": "fetch",
+      "tools_accepted": 0,
+      "tools_attempted": 1,
+      "tools_invalid": 1
+    },
+    {
+      "results": [
+        {
+          "accepted": false,
+          "arguments_digest": "sha256:28145b2421d50f8a49c122ff9079e5ef96bfdbfa42376a708921b458c880dd2d",
+          "error": "MCP tool result has isError=true",
+          "tool_subject": "sha256:0c1530ddc8f1d78819a9c2415295724b47090aa5df733d1c088c236ee0c99eca"
+        }
+      ],
+      "server_subject": "sha256:0401e5a3980067c522b6eee1e60d918a064129b225e8e1ce56e38646e73a78ef",
+      "target": "sequential-thinking",
+      "tools_accepted": 0,
+      "tools_attempted": 1,
+      "tools_invalid": 1
+    },
+    {
+      "results": [
+        {
+          "accepted": true,
+          "arguments_digest": "sha256:0cb0681c65eabd8faf126987dc3871233e2b5782b6e9d67782bba5347b4b28f6",
+          "error": null,
+          "tool_subject": "sha256:fb39dcec5babb48b18cac06b38a0c8716cd1a1da7d39e8196a55bf008689238b"
+        },
+        {
+          "accepted": true,
+          "arguments_digest": "sha256:d8683608eb8e75ae1e89fbfe2cd6b12fdfa06f2fd259952360e9fe9ebfcf1438",
+          "error": null,
+          "tool_subject": "sha256:3dfbb3c57fbfff599116e33bfa076350628ecd9598dcb2d5ae4ca0385586b493"
+        }
+      ],
+      "server_subject": "sha256:af326e80ba2fe2ad94de41b95d0533cad47eab4c2d384d0a790b57299017382d",
+      "target": "context7",
+      "tools_accepted": 2,
+      "tools_attempted": 2,
+      "tools_invalid": 0
+    },
+    {
+      "results": [
+        {
+          "accepted": false,
+          "arguments_digest": "sha256:c2052cd94fe4a5f899a7a12895e69f023a4daa45d5c2299a5fbc51edc2b01461",
+          "error": "MCP tool result has isError=true",
+          "tool_subject": "sha256:577a25eaec7d97e24c342f36741633330693a33f73ecfb6d2ae16c938dbf3ba9"
+        },
+        {
+          "accepted": false,
+          "arguments_digest": "sha256:2dd49ed5ad92ac9ab3652eee4e5ee8f27f44891a4d8de1ec8b6440e3ae56f44f",
+          "error": "MCP tool result has isError=true",
+          "tool_subject": "sha256:c83b9232a8ec5ad29ef91d962901e44d45c070b1c2db78be51c1b58beba9ce32"
+        },
+        {
+          "accepted": true,
+          "arguments_digest": "sha256:c2052cd94fe4a5f899a7a12895e69f023a4daa45d5c2299a5fbc51edc2b01461",
+          "error": null,
+          "tool_subject": "sha256:be3700443f9c4ecabc6bb4feb3044446c4338922f99b990302f5e144edc15611"
+        },
+        {
+          "accepted": true,
+          "arguments_digest": "sha256:80aa79c3dc1eb95cf7b86bdf576c8c2cef0d813fa2ae63a2aed1c680fbab1444",
+          "error": null,
+          "tool_subject": "sha256:9f844f716363770bf7ffcaeaea83b44dcbc2d98ed7f3227d278413aca26309ec"
+        },
+        {
+          "accepted": false,
+          "arguments_digest": "sha256:1aea4810e04d22c3b7719fa079e31c72476c329e724deab06ed4f6edc2427231",
+          "error": "MCP tool result has isError=true",
+          "tool_subject": "sha256:211c6e8cd10e56704e990aa474003399902b6fc4ad1e8066abdecc7c7497d350"
+        }
+      ],
+      "server_subject": "sha256:ef097f884c13dc7d5dfc9d1c93e1b0842d6bf01718923bbc4977696d59c8b0f7",
+      "target": "aws-documentation",
+      "tools_accepted": 2,
+      "tools_attempted": 5,
+      "tools_invalid": 3
+    },
+    {
+      "results": [
+        {
+          "accepted": false,
+          "arguments_digest": "sha256:eb222f4f0b77e35d69475b960a21143271ea7b39c6c5623ee2291650bebf25d5",
+          "error": "MCP tool result has isError=true",
+          "tool_subject": "sha256:a0a0af9190ceb48b5a26f3306082aff96f564b02b13b5d67fd942a0c5433ae50"
+        },
+        {
+          "accepted": false,
+          "arguments_digest": "sha256:b492ed1402f3c608e61beb01397bda6802659113c363166bbaa911ba37381eaa",
+          "error": "MCP tool result has isError=true",
+          "tool_subject": "sha256:2bfe4ef8b23c16b3876ee4da0623fedcd3bbd0baed0594ee4beaac3dbfbb3167"
+        },
+        {
+          "accepted": false,
+          "arguments_digest": "sha256:eccba1a6ed7de500526410a7f804d98cf4a7d5f3bb02f0764751abb8ad6d4eb1",
+          "error": "MCP tool result has isError=true",
+          "tool_subject": "sha256:72325ce67a01c8ca4949a035dad1612f83adeb0408886559c456c4905e8d3e63"
+        },
+        {
+          "accepted": false,
+          "arguments_digest": "sha256:802cb1059f72dc916aeb93ee854afe30c7f8f8cc5b2fc4dd1cb153c79919fa12",
+          "error": "MCP tool result has isError=true",
+          "tool_subject": "sha256:142c125cf575c1e43a30e42f2681fed98be4b586df3b4c2efab72459ee87d08d"
+        },
+        {
+          "accepted": false,
+          "arguments_digest": "sha256:291c401e8ccdc879aa9846b7c0d82d12d010684921926093517da4265c0212b5",
+          "error": "MCP tool result has isError=true",
+          "tool_subject": "sha256:3cd23dd087cebe9be557f20a90ba74f9a20b5b5a3611fa47716a6268fee4e569"
+        },
+        {
+          "accepted": false,
+          "arguments_digest": "sha256:ac36af072ed4ea14a2cedee3ab290d45d1e0f52458bca0e421fb6140833243aa",
+          "error": "MCP tool result has isError=true",
+          "tool_subject": "sha256:97cf0d0b68cacf4ff11e53a2826a15cb46b1727cd1bff0bc061080b884564fd2"
+        },
+        {
+          "accepted": false,
+          "arguments_digest": "sha256:f7fb95497cf9841aed51bc504099e19beb28aeee1defe3c48bfbbbb9b617ff16",
+          "error": "MCP tool result has isError=true",
+          "tool_subject": "sha256:8fdc6885857a2e7dc4c8a4bdda2b7ca96291fff14a51f09f83afcebdad96444e"
+        },
+        {
+          "accepted": false,
+          "arguments_digest": "sha256:64362ab3fefa9cca9c4e2da1a5be09638cbb7967332591d8042d704a4935a068",
+          "error": "MCP tool result has isError=true",
+          "tool_subject": "sha256:cf79e3b66d822a081ed9167e3ea69ef507e5220f292fc2cbcadb2a992b4d3322"
+        },
+        {
+          "accepted": false,
+          "arguments_digest": "sha256:64362ab3fefa9cca9c4e2da1a5be09638cbb7967332591d8042d704a4935a068",
+          "error": "MCP tool result has isError=true",
+          "tool_subject": "sha256:c00a920c58fc514667f4b9fe053c3edb2d6f549000f18038b0e05a0a93198f5b"
+        },
+        {
+          "accepted": false,
+          "arguments_digest": "sha256:9078cea2ce030e68c776d8cb46c5d56a4eaa3ba7ba2f1f1a3105446831601423",
+          "error": "MCP tool result has isError=true",
+          "tool_subject": "sha256:f9cc5f95cbfcd72ab6f7938b3829b686ee7ab3b05c9377264942bfcb31960fc3"
+        },
+        {
+          "accepted": false,
+          "arguments_digest": "sha256:44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+          "error": "MCP tool result has isError=true",
+          "tool_subject": "sha256:fc14745ba3bdfa4dd4ce11d2e2a73d708e38b11e2ef347bab004127c3a9076a0"
+        },
+        {
+          "accepted": false,
+          "arguments_digest": "sha256:d242e057b01bc16c6d9aa9da654682ab5f24ffff3ad7ad0b0fa38485a5fde776",
+          "error": "MCP tool result has isError=true",
+          "tool_subject": "sha256:44727a6b5905886103f989225bc5519faa14047eee53804a10c6405d6520f98f"
+        },
+        {
+          "accepted": false,
+          "arguments_digest": "sha256:d242e057b01bc16c6d9aa9da654682ab5f24ffff3ad7ad0b0fa38485a5fde776",
+          "error": "MCP tool result has isError=true",
+          "tool_subject": "sha256:d282cccd85ec7f92413ecabe468e1075b0963acc8d28a4016e712064bd63c782"
+        },
+        {
+          "accepted": true,
+          "arguments_digest": "sha256:44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+          "error": null,
+          "tool_subject": "sha256:f8cc4bd0b7f7ddb5db88972d9c0027ed9fd33e63ffb4bb2925acb3f6700c6077"
+        },
+        {
+          "accepted": false,
+          "arguments_digest": "sha256:e27b1d9c58f6088ff31dae6da1ba4168896051783ad457a485966c588937ea44",
+          "error": "MCP tool result has isError=true",
+          "tool_subject": "sha256:e069941f8c967aba598b38f1228aa56d83c1fb95431b14abaa30276381e3e15e"
+        },
+        {
+          "accepted": false,
+          "arguments_digest": "sha256:e27b1d9c58f6088ff31dae6da1ba4168896051783ad457a485966c588937ea44",
+          "error": "MCP tool result has isError=true",
+          "tool_subject": "sha256:98125ab755891561f2fcab312a83febb39cb531d907b835ebcbdd3e1ddc8cdb8"
+        },
+        {
+          "accepted": false,
+          "arguments_digest": "sha256:d0ca58342504e57f2f353c8779f799122f5f2a45e09a2ced02d4b3278522c3cd",
+          "error": "MCP tool result has isError=true",
+          "tool_subject": "sha256:344c810ca31664953a20eab31fada64eadbf4d9bb1180d5d96925f3bb5f936d7"
+        },
+        {
+          "accepted": false,
+          "arguments_digest": "sha256:44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+          "error": "MCP tool result has isError=true",
+          "tool_subject": "sha256:abcfba1f1ee38b4b4cfd8c6dd2d0eca47665bd2ba41f8eab582f20468566b8ae"
+        },
+        {
+          "accepted": false,
+          "arguments_digest": "sha256:44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+          "error": "MCP tool result has isError=true",
+          "tool_subject": "sha256:166ab4fbf2f4fd12299586af9b551c900ae3a353b892eee6ec04d3cc5089e171"
+        },
+        {
+          "accepted": false,
+          "arguments_digest": "sha256:d242e057b01bc16c6d9aa9da654682ab5f24ffff3ad7ad0b0fa38485a5fde776",
+          "error": "MCP tool result has isError=true",
+          "tool_subject": "sha256:949688aeb69bb3591aa5c9c1754d2d0d5909d791c2a83a111ccff4691c8c95b6"
+        },
+        {
+          "accepted": false,
+          "arguments_digest": "sha256:eccba1a6ed7de500526410a7f804d98cf4a7d5f3bb02f0764751abb8ad6d4eb1",
+          "error": "MCP tool result has isError=true",
+          "tool_subject": "sha256:6779223b40dd0c746fd2bf7a14671089b2a07dc38b23c357448d04a7bfcfa244"
+        },
+        {
+          "accepted": false,
+          "arguments_digest": "sha256:378ba5154659733a9ebc85b266c6f230132a39c8c31ebf1aa08919d69dd82ea0",
+          "error": "MCP tool result has isError=true",
+          "tool_subject": "sha256:a1f5b7cf6b641c1929aeed3f2bde5da5dad93797bfb5d6b37e84941132518567"
+        },
+        {
+          "accepted": false,
+          "arguments_digest": "sha256:f6d0e0de63536c21e94f36dac430b058f299568800e44f15365ba82343b3e33e",
+          "error": "MCP tool result has isError=true",
+          "tool_subject": "sha256:72a127a2f56012ce1042d44edac3c03c1e5161c17aa2a6876aba8eabd154e7c4"
+        },
+        {
+          "accepted": false,
+          "arguments_digest": "sha256:cebcd57c765e8cfd4fe43341931f480bf9a8acbccb42862c9ac256ab5b32c410",
+          "error": "MCP tool result has isError=true",
+          "tool_subject": "sha256:455b8dd4fb6797d3146dce09d46b57d385d9144207cb4a319aa22f871e4d52ad"
+        },
+        {
+          "accepted": false,
+          "arguments_digest": "sha256:bb4c9cd6f80a568f15c5ed8ab82aa99956e0c67b35cc419fa4edfef263b1be9b",
+          "error": "MCP tool result has isError=true",
+          "tool_subject": "sha256:3489e9b69f3a88b63380469096ad2c8d83f36fe3723958561514ec656113d002"
+        },
+        {
+          "accepted": false,
+          "arguments_digest": "sha256:e27b1d9c58f6088ff31dae6da1ba4168896051783ad457a485966c588937ea44",
+          "error": "MCP tool result has isError=true",
+          "tool_subject": "sha256:3eb1ad61de22f3de28a23d7660068f12110e0e42ff21c5e27bcdcef7b762a6f8"
+        },
+        {
+          "accepted": false,
+          "arguments_digest": "sha256:b95990cf7f0f011f6d110e3837c4db9609075d98b9b1a37aca8ef9413046a520",
+          "error": "MCP tool result has isError=true",
+          "tool_subject": "sha256:8f2b146eda79d61cf4f2b26b1a6a85caa3bb716921130e7c75953488ab252c3b"
+        },
+        {
+          "accepted": false,
+          "arguments_digest": "sha256:a8ca0d3d2691483a3d5ed02e24d3acf459113bedcb90c4da170ddc046727a66b",
+          "error": "MCP tool result has isError=true",
+          "tool_subject": "sha256:d053c2c5fa19785f40cc024456edcb2fcacde562eb54b3a15e890a1d9a44b2dd"
+        },
+        {
+          "accepted": false,
+          "arguments_digest": "sha256:061953c67d9737a002237934025bc5f9db71d0e58d891a8c9de5d967813d8ae4",
+          "error": "MCP tool result has isError=true",
+          "tool_subject": "sha256:624b986b0bfa19f21e4c2fe6f72bbd8887552f325aaa8a8d2bb26e5daaaf209a"
+        }
+      ],
+      "server_subject": "sha256:f37ac524a1545d9c7d3a5b7c5c5be2c922911540a332b734cf2c8b98270cb7a0",
+      "target": "serena",
+      "tools_accepted": 1,
+      "tools_attempted": 29,
+      "tools_invalid": 28
+    },
+    {
+      "results": [],
+      "server_subject": null,
+      "target": "playwright",
+      "target_error": "ExceptionGroup: unhandled errors in a TaskGroup (1 sub-exception)",
+      "tools_accepted": 0,
+      "tools_attempted": 0,
+      "tools_invalid": 0
+    },
+    {
+      "results": [],
+      "server_subject": null,
+      "target": "chrome-devtools",
+      "target_error": "ExceptionGroup: unhandled errors in a TaskGroup (1 sub-exception)",
+      "tools_accepted": 0,
+      "tools_attempted": 0,
+      "tools_invalid": 0
+    }
+  ],
+  "targets_attempted": 9,
+  "targets_discovered": 7,
+  "tools_accepted": 15,
+  "tools_attempted": 61,
+  "tools_invalid": 46,
+  "valid_first_call_rate": "0.245902"
+}

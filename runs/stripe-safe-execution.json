@@ -1,0 +1,50 @@
+{
+  "kind": "safe-model-plan-execution/v0",
+  "plan_envelope_digest": "sha256:a2165b757035df940771387c4d9836cd86398601fe8f86594f1a584bade674cb",
+  "results": [
+    {
+      "status": "accepted",
+      "tool_subject": "sha256:3e37a7920057d9214143115d3c0ea5b12f1d10a52953dd57add1f170d8460a4c"
+    },
+    {
+      "status": "accepted",
+      "tool_subject": "sha256:3330a86fbc37645d456dfa962391e9b4970e7f71de51dfcc9fc93e7ebd3bc1dd"
+    },
+    {
+      "status": "accepted",
+      "tool_subject": "sha256:32ba1c333f63f5a84952a2718b73f3ba56d7eefd46291fe0107a6882c9e10550"
+    },
+    {
+      "status": "accepted",
+      "tool_subject": "sha256:b7e694eec7bf35e2f2354c453dc75a57722151db99c165fab3bb6041b377650b"
+    },
+    {
+      "status": "accepted",
+      "tool_subject": "sha256:38ce4e34289d72531420091f9a471f4e3219771f952c8be0bbc0e04bc063ea47"
+    },
+    {
+      "status": "policy_blocked",
+      "tool_subject": "sha256:e14b7fffab9d97125c2749ffb88bc27cc91b406acf85d63a068eaf40d6e92f35"
+    },
+    {
+      "status": "policy_blocked",
+      "tool_subject": "sha256:d132c242304e32543514f3c68d217eb449667b843d85578db3e00739cdac3420"
+    },
+    {
+      "status": "policy_blocked",
+      "tool_subject": "sha256:4abb4b338953a6b990e82a8c139413d99fe4399c275502850518bafee5762ed0"
+    },
+    {
+      "status": "policy_blocked",
+      "tool_subject": "sha256:de58418b9b0de0568f9a5264f01f0a66e0b5d0d3196daeb7c387d5215df149c2"
+    },
+    {
+      "status": "policy_blocked",
+      "tool_subject": "sha256:d63c2d3e4a013df2794ac610c14a6d1dd380d7ac85d1ccf557988843997f376b"
+    }
+  ],
+  "steps_accepted": 5,
+  "steps_admitted": 5,
+  "steps_total": 10,
+  "target_subject": "sha256:03dc2bd4ca7ce7d083ae8e860c728cd1f874f7878313f6b57199b0472bae7f1e"
+}

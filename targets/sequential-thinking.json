@@ -1,0 +1,20 @@
+{
+  "name": "sequential-thinking",
+  "transport": "stdio",
+  "command": [
+    "docker",
+    "run",
+    "--rm",
+    "-i",
+    "--network",
+    "bridge",
+    "node:22-alpine",
+    "npx",
+    "-y",
+    "@modelcontextprotocol/server-sequential-thinking"
+  ],
+  "args": [],
+  "env_vars": [],
+  "network": "bridge",
+  "package_or_endpoint": "@modelcontextprotocol/server-sequential-thinking"
+}

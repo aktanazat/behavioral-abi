@@ -1,0 +1,22 @@
+{
+  "name": "sentry",
+  "transport": "stdio",
+  "command": [
+    "docker",
+    "run",
+    "--rm",
+    "-i",
+    "--network",
+    "bridge",
+    "node:22-alpine",
+    "npx",
+    "-y",
+    "@sentry/mcp-server"
+  ],
+  "args": [],
+  "env_vars": [
+    "SENTRY_ACCESS_TOKEN"
+  ],
+  "network": "bridge",
+  "package_or_endpoint": "@sentry/mcp-server"
+}

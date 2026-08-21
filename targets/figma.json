@@ -1,0 +1,22 @@
+{
+  "name": "figma",
+  "transport": "stdio",
+  "command": [
+    "docker",
+    "run",
+    "--rm",
+    "-i",
+    "--network",
+    "bridge",
+    "node:22-alpine",
+    "npx",
+    "-y",
+    "figma-developer-mcp"
+  ],
+  "args": [],
+  "env_vars": [
+    "FIGMA_API_KEY"
+  ],
+  "network": "bridge",
+  "package_or_endpoint": "figma-developer-mcp"
+}

@@ -1,0 +1,327 @@
+{
+  "kind": "corpus/top20/v0",
+  "source_file": "research/top-servers/SUMMARY.md",
+  "research_date": "2026-08-20",
+  "entries": [
+    {
+      "rank": 1,
+      "name": "GitHub MCP",
+      "repo": "https://github.com/github/github-mcp-server",
+      "package_or_endpoint": "ghcr.io/github/github-mcp-server",
+      "distribution": "docker-image",
+      "popularity_evidence": "32,390★; GitHub's own MCP Registry (https://github.com/mcp/github/github-mcp-server) + Docker Catalog (https://hub.docker.com/mcp/explore) feature it as *the* official GitHub server; PulseMCP all-time 6.9M visitors (weekly figure anomalous, see SUMMARY.md caveat)",
+      "transport": "stdio + HTTP (separate subcommands)",
+      "auth": "GITHUB_PERSONAL_ACCESS_TOKEN env, OAuth, or GitHub App",
+      "annotation_coverage": "Partial — title+readOnlyHint always set; destructiveHint on only 2 tools (delete_repository,delete_file); idempotentHint/openWorldHint never set in source but idempotentHint is asserted false on the wire anyway (see Discrepancy 1)",
+      "sandboxable": "Yes — fine-grained PAT scoped to a disposable repo/org, --read-only flag, --gh-host for a throwaway GHES instance",
+      "inclusion": {
+        "status": "included",
+        "reason": "Meets every population criterion (first-party, 32,390 GitHub stars, featured in the official MCP Registry and Docker Catalog, exact Docker image tag recorded). Publicly runnable credential-free via `docker run ... ghcr.io/github/github-mcp-server` for DISCOVER, but tool calls need a caller-supplied GITHUB_PERSONAL_ACCESS_TOKEN -- also one of the 3 required stateful sandboxes (disposable repo), so a SandboxManifest template is provided in sandboxes/."
+      }
+    },
+    {
+      "rank": 2,
+      "name": "Playwright MCP",
+      "repo": "https://github.com/microsoft/playwright-mcp",
+      "package_or_endpoint": "@playwright/mcp",
+      "distribution": "npm",
+      "popularity_evidence": "36,311★; npm @playwright/mcp 4,646,088 dl/week; PulseMCP 5.5M/week, 76.9M all-time — #1 by weekly PulseMCP visits of every server checked; featured in GitHub MCP Registry + Docker Catalog",
+      "transport": "stdio (default) + HTTP (--port)",
+      "auth": "none",
+      "annotation_coverage": "Partial/nonstandard — internal type: 'input'|'assertion'|'action'|'readOnly' field mechanically mapped: readOnlyHint=(type∈{readOnly,assertion}), destructiveHint=!readOnlyHint (blanket negation), openWorldHint hardcoded true for every tool, idempotentHint never emitted",
+      "sandboxable": "Yes by default (ephemeral/managed profile); but --extension/--cdp-endpoint can attach to the user's real, already-logged-in browser — a documented, non-hypothetical real-session risk",
+      "inclusion": {
+        "status": "included",
+        "reason": "Meets every population criterion (36,311 GitHub stars, highest weekly npm downloads of any server checked, corroborated by GitHub MCP Registry + Docker Catalog). No credentials required; publicly runnable via `npx -y @playwright/mcp --headless --isolated`, though DISCOVER may be slow/fail in a minimal container without a pre-provisioned Chromium (attempted, outcome reported, not assumed)."
+      }
+    },
+    {
+      "rank": 3,
+      "name": "Chrome DevTools MCP",
+      "repo": "https://github.com/ChromeDevTools/chrome-devtools-mcp",
+      "package_or_endpoint": "chrome-devtools-mcp",
+      "distribution": "npm",
+      "popularity_evidence": "49,494★; npm chrome-devtools-mcp 2,074,897 dl/week; PulseMCP 2.3M/week, 45.7M all-time (#2); featured in GitHub MCP Registry",
+      "transport": "stdio only",
+      "auth": "none",
+      "annotation_coverage": "Partial, custom scheme — schema is exactly {title?, category(required), readOnlyHint(required), conditions?}; destructiveHint/idempotentHint/openWorldHint do not exist anywhere in this codebase",
+      "sandboxable": "Yes — --isolated flag (temp profile, auto-cleanup)",
+      "inclusion": {
+        "status": "included",
+        "reason": "Meets every population criterion (49,494 GitHub stars, highest star count and #2 weekly PulseMCP visits of any server checked). No credentials required; publicly runnable via `npx -y chrome-devtools-mcp --headless --isolated`, though DISCOVER depends on a usable Chromium in the sandbox (attempted, outcome reported, not assumed)."
+      }
+    },
+    {
+      "rank": 4,
+      "name": "Context7",
+      "repo": "https://github.com/upstash/context7",
+      "package_or_endpoint": "@upstash/context7-mcp",
+      "distribution": "npm",
+      "popularity_evidence": "61,000★ — highest star count of every server checked; npm @upstash/context7-mcp 553,744 dl/week; PulseMCP 1.2M/week, 31.8M all-time; Smithery 5.56k uses; featured in GitHub MCP Registry",
+      "transport": "stdio (default) or HTTP via one --transport flag; hosted remote at mcp.context7.com/mcp",
+      "auth": "optional API key either transport; anonymous works at a lower rate limit",
+      "annotation_coverage": "Full 4-field MCP set on both tools — retrofitted across two releases (v2.0.1, v2.2.2), absent at v2.0.0 launch",
+      "sandboxable": "Read-only against Context7's own doc index (no customer data) but not offline-testable — always calls live production context7.com/api",
+      "inclusion": {
+        "status": "included",
+        "reason": "Meets every population criterion (61,000 GitHub stars, the highest of every server checked). Anonymous access works at a lower rate limit, so DISCOVER is publicly runnable credential-free via `npx -y @upstash/context7-mcp` with no API key."
+      }
+    },
+    {
+      "rank": 5,
+      "name": "Filesystem (Anthropic reference)",
+      "repo": "https://github.com/modelcontextprotocol/servers",
+      "package_or_endpoint": "@modelcontextprotocol/server-filesystem",
+      "distribution": "npm",
+      "popularity_evidence": "Parent monorepo 89,721★; npm @modelcontextprotocol/server-filesystem 529,343 dl/week; PulseMCP 443k/week, 14.6M all-time",
+      "transport": "stdio only",
+      "auth": "none",
+      "annotation_coverage": "Full — best-in-class reference. Every tool: readOnlyHint+openWorldHint+title; write tools additionally idempotentHint+destructiveHint",
+      "sandboxable": "Yes, trivially — path-allowlist via argv or dynamic MCP Roots",
+      "inclusion": {
+        "status": "included",
+        "reason": "Meets every population criterion (parent monorepo 89,721 GitHub stars, 529,343 npm downloads/week). No credentials required, path-allowlisted to a scratch directory. Already present as targets/filesystem.json (preserved, predates this corpus population)."
+      }
+    },
+    {
+      "rank": 6,
+      "name": "Fetch (Anthropic reference)",
+      "repo": "https://github.com/modelcontextprotocol/servers",
+      "package_or_endpoint": "mcp-server-fetch",
+      "distribution": "pypi",
+      "popularity_evidence": "Same monorepo; PyPI mcp-server-fetch 167,837 dl/week; PulseMCP 514k/week, 31.8M all-time",
+      "transport": "stdio only",
+      "auth": "none",
+      "annotation_coverage": "None — predates the annotations spec; low-level SDK Tool() call has no annotations kwarg",
+      "sandboxable": "Yes, trivially — no account of any kind",
+      "inclusion": {
+        "status": "included",
+        "reason": "Meets every population criterion (parent monorepo 89,721 GitHub stars, 167,837 PyPI downloads/week). No credentials required; publicly runnable via `uvx mcp-server-fetch`."
+      }
+    },
+    {
+      "rank": 7,
+      "name": "Notion",
+      "repo": "https://github.com/makenotion/notion-mcp-server",
+      "package_or_endpoint": "@notionhq/notion-mcp-server",
+      "distribution": "npm",
+      "popularity_evidence": "4,594★; npm @notionhq/notion-mcp-server 137,257 dl/week; PulseMCP 141k/week, 3.4M all-time; listed in Docker Catalog, GitHub MCP Registry, and Claude's connectors directory",
+      "transport": "stdio + self-hosted Streamable HTTP; separate closed-source official hosted remote at mcp.notion.com/mcp",
+      "auth": "NOTION_TOKEN / internal integration token",
+      "annotation_coverage": "Partial — readOnlyHint/destructiveHint auto-derived purely from HTTP verb (GET vs POST/PATCH/DELETE); no idempotentHint/openWorldHint; the verb-only rule is provably wrong for 2 of 24 tools (see Discrepancy 4)",
+      "sandboxable": "Yes — integration token scoped to one test page/database",
+      "inclusion": {
+        "status": "included",
+        "reason": "Meets every population criterion (4,594 GitHub stars, 137,257 npm downloads/week, corroborated by Docker Catalog/GitHub MCP Registry/Claude connectors). Requires a caller-supplied NOTION_TOKEN; credential-free discovery not attempted for this entry."
+      }
+    },
+    {
+      "rank": 8,
+      "name": "Slack",
+      "repo": "https://github.com/korotovsky/slack-mcp-server",
+      "package_or_endpoint": "slack-mcp-server",
+      "distribution": "npm",
+      "popularity_evidence": "korotovsky: 1,790★, self-reported \"30,000 monthly visitors / 9,000+ users\" in its own README; PulseMCP's \"official Slack\" listing (61.3k/week, 666k all-time) matches the Feb 17 2026 GA date of Slack's closed-source hosted MCP, not the 12★ sample repo it links as \"Learn more\"",
+      "transport": "korotovsky: stdio/SSE/HTTP; official: Streamable HTTP + OAuth",
+      "auth": "korotovsky: bot-token OAuth or \"stealth mode\" using browser session tokens (xoxc/xoxd) scraped from cookies, bypassing normal workspace app-approval; official: OAuth + admin approval",
+      "annotation_coverage": "korotovsky: none — 0 grep matches for any of the 4 hints despite running a post-annotations SDK version that supports them",
+      "sandboxable": "Yes — free workspace + scoped bot + single test channel; message-posting/reactions disabled by default via env-var gate",
+      "inclusion": {
+        "status": "included",
+        "reason": "Meets every population criterion (de facto dominant OSS implementation, 1,790 GitHub stars, self-reported adoption, matches the PulseMCP-listed GA date). Requires caller-supplied SLACK_BOT_TOKEN and SLACK_TEAM_ID; credential-free discovery not attempted for this entry."
+      }
+    },
+    {
+      "rank": 9,
+      "name": "Serena",
+      "repo": "https://github.com/oraios/serena",
+      "package_or_endpoint": "serena-agent",
+      "distribution": "pypi",
+      "popularity_evidence": "28,299★ — 2nd-highest star count checked, ahead of GitHub MCP; PulseMCP 43k/week; featured in GitHub MCP Registry; distributed via PyPI (serena-agent), not just git",
+      "transport": "stdio (default) + SSE + streamable HTTP",
+      "auth": "none",
+      "annotation_coverage": "Partial — title+readOnlyHint+destructiveHint derived from an internal can_edit() marker, not authored against the spec directly; no idempotentHint/openWorldHint",
+      "sandboxable": "Runs against a local scratch codebase directory — no external account concept",
+      "inclusion": {
+        "status": "included",
+        "reason": "Meets every population criterion (28,299 GitHub stars, 2nd-highest of every server checked, featured in the GitHub MCP Registry). No credentials required; publicly runnable via `uvx --from serena-agent serena start-mcp-server` against a scratch directory (glibc Python base image required -- psutil has no prebuilt musllinux wheel, see targets/serena.json)."
+      }
+    },
+    {
+      "rank": 10,
+      "name": "Atlassian (Jira/Confluence)",
+      "repo": "https://github.com/sooperset/mcp-atlassian",
+      "package_or_endpoint": "mcp-atlassian",
+      "distribution": "pypi",
+      "popularity_evidence": "sooperset: 5,773★; PyPI mcp-atlassian ~424k dl/week (extrapolated); PulseMCP's official listing only 68/week (see SUMMARY.md PulseMCP caveat)",
+      "transport": "sooperset: stdio (default) + HTTP; official: remote HTTP only",
+      "auth": "sooperset: API token (Cloud) / PAT (Server-DC) / OAuth 2.0; official: OAuth 2.1 3LO or admin-enabled API token",
+      "annotation_coverage": "sooperset: readOnlyHint+destructiveHint per mutation type on ~98 tools; no idempotentHint/openWorldHint. official: unverifiable (closed-source)",
+      "sandboxable": "sooperset: yes — any Cloud site incl. free trial, plus a hard READ_ONLY_MODE env kill-switch",
+      "inclusion": {
+        "status": "included",
+        "reason": "Meets every population criterion (5,773 GitHub stars, ~424k PyPI downloads/week extrapolated, corroborated despite the PulseMCP anomaly). Requires caller-supplied JIRA_URL/JIRA_USERNAME/JIRA_API_TOKEN (or CONFLUENCE_* equivalents); credential-free discovery not attempted for this entry."
+      }
+    },
+    {
+      "rank": 11,
+      "name": "Supabase",
+      "repo": "https://github.com/supabase/mcp",
+      "package_or_endpoint": "@supabase/mcp-server-supabase",
+      "distribution": "npm",
+      "popularity_evidence": "2,867★; npm @supabase/mcp-server-supabase 88,253 dl/week; PulseMCP 112k/week, 3.7M all-time; featured in GitHub MCP Registry (com.supabase/mcp)",
+      "transport": "stdio + hosted remote HTTP (mcp.supabase.com/mcp) + local Supabase-CLI HTTP",
+      "auth": "PAT (stdio) or OAuth 2.1 (hosted); --project-ref scoping",
+      "annotation_coverage": "Full 4-field set on every DB tool — most complete of the Postgres-family servers checked; but execute_sql's read-only enforcement is unverifiable from source (Discrepancy 3)",
+      "sandboxable": "Yes — free project + --project-ref scoping",
+      "inclusion": {
+        "status": "included",
+        "reason": "Meets every population criterion (2,867 GitHub stars, 88,253 npm downloads/week, featured in the GitHub MCP Registry). Requires a caller-supplied SUPABASE_ACCESS_TOKEN; credential-free discovery not attempted for this entry."
+      }
+    },
+    {
+      "rank": 12,
+      "name": "Sequential Thinking (Anthropic reference)",
+      "repo": "https://github.com/modelcontextprotocol/servers",
+      "package_or_endpoint": "@modelcontextprotocol/server-sequential-thinking",
+      "distribution": "npm",
+      "popularity_evidence": "Same monorepo; npm @modelcontextprotocol/server-sequential-thinking 96,814 dl/week; PulseMCP 103k/week, 6.6M all-time",
+      "transport": "stdio only",
+      "auth": "none",
+      "annotation_coverage": "Full and accurate — single tool, readOnlyHint:true/destructiveHint:false/idempotentHint:true/openWorldHint:false, matches its zero-I/O implementation exactly",
+      "sandboxable": "Yes, trivially — zero I/O of any kind",
+      "inclusion": {
+        "status": "included",
+        "reason": "Meets every population criterion (parent monorepo 89,721 GitHub stars, 96,814 npm downloads/week). No credentials required; publicly runnable via `npx -y @modelcontextprotocol/server-sequential-thinking`."
+      }
+    },
+    {
+      "rank": 13,
+      "name": "Memory / Knowledge Graph (Anthropic reference)",
+      "repo": "https://github.com/modelcontextprotocol/servers",
+      "package_or_endpoint": "@modelcontextprotocol/server-memory",
+      "distribution": "npm",
+      "popularity_evidence": "Same monorepo; npm @modelcontextprotocol/server-memory 70,558 dl/week; PulseMCP 78.1k/week, 3.9M all-time",
+      "transport": "stdio only",
+      "auth": "none",
+      "annotation_coverage": "Full — but 3 of 9 tools (create_entities/create_relations/add_observations) are annotated idempotentHint:false while the handler actually dedupes, making them genuinely idempotent (under-claimed, not over-claimed, risk)",
+      "sandboxable": "Yes — point MEMORY_FILE_PATH at a scratch file",
+      "inclusion": {
+        "status": "included",
+        "reason": "Meets every population criterion (parent monorepo 89,721 GitHub stars, 70,558 npm downloads/week). No credentials required. Already present as targets/memory.json (preserved, predates this corpus population)."
+      }
+    },
+    {
+      "rank": 14,
+      "name": "GitLab",
+      "repo": "https://github.com/zereight/gitlab-mcp",
+      "package_or_endpoint": "@zereight/mcp-gitlab",
+      "distribution": "npm",
+      "popularity_evidence": "zereight: 1,907★, 1,403 commits; PulseMCP 43.5k/week vs. official gitlab.com-hosted listing at only 24/week; featured in GitHub MCP Registry",
+      "transport": "zereight: stdio (default), Docker SSE, streamable HTTP; official: HTTP, part of the user's own GitLab instance",
+      "auth": "zereight: PAT or OAuth2 (local browser flow or MCP-proxy for remote); official: OAuth 2.0 with Dynamic Client Registration",
+      "annotation_coverage": "zereight: readOnlyHint+destructiveHint+openWorldHint plus a custom confirmationHint, verified by dedicated integration tests, not just declared. official: not applicable (closed-source)",
+      "sandboxable": "zereight: yes — free GitLab.com account + scoped PAT, or self-hosted CE",
+      "inclusion": {
+        "status": "included",
+        "reason": "Meets every population criterion (1,907 GitHub stars, dominant community implementation, 43.5k/week PulseMCP vs. 24/week for the official listing, featured in the GitHub MCP Registry). Requires a caller-supplied GITLAB_PERSONAL_ACCESS_TOKEN; credential-free discovery not attempted for this entry."
+      }
+    },
+    {
+      "rank": 15,
+      "name": "Sentry",
+      "repo": "https://github.com/getsentry/sentry-mcp",
+      "package_or_endpoint": "@sentry/mcp-server",
+      "distribution": "npm",
+      "popularity_evidence": "825★; npm @sentry/mcp-server 94,598 dl/week; listed in Claude's connectors directory; PulseMCP anomalously low (see SUMMARY.md PulseMCP caveat)",
+      "transport": "hosted remote Streamable HTTP (mcp.sentry.dev/mcp) + local stdio",
+      "auth": "hosted: OAuth or Authorization: Sentry-Bearer header; stdio: Sentry User Auth Token",
+      "annotation_coverage": "Best-in-class of every server checked — full 4-field set, 3 of 4 fields are required at the TypeScript type level, and a dedicated unit test asserts every tool has a complete annotation set",
+      "sandboxable": "Self-hosted Sentry documented (--host, --insecure-http); no explicit SaaS sandbox-org callout",
+      "inclusion": {
+        "status": "included",
+        "reason": "Meets every population criterion (94,598 npm downloads/week, listed in Claude's connectors directory, corroborated despite the PulseMCP anomaly documented in SUMMARY.md). Requires a caller-supplied SENTRY_ACCESS_TOKEN; credential-free discovery not attempted for this entry."
+      }
+    },
+    {
+      "rank": 16,
+      "name": "Stripe",
+      "repo": "https://github.com/stripe/agent-toolkit",
+      "package_or_endpoint": "@stripe/mcp",
+      "distribution": "npm",
+      "popularity_evidence": "1,753★ (at old name); npm @stripe/agent-toolkit 16,187 dl/week; PulseMCP 74.5k/week, 1.8M all-time; listed in Docker Catalog, GitHub MCP Registry, Claude connectors directory",
+      "transport": "Thin stdio↔Streamable-HTTP proxy to the single closed-source hosted backend mcp.stripe.com — no offline execution mode anywhere in the repo",
+      "auth": "STRIPE_SECRET_KEY/restricted key (rk_*) as Bearer to mcp.stripe.com; OAuth handled entirely server-side",
+      "annotation_coverage": "None — structurally impossible, not merely omitted (see Discrepancy: the proxy never constructs a tool object; the one remaining code path calls an SDK overload with no annotations parameter)",
+      "sandboxable": "Yes — free rk_test_* Restricted API Key scoped to needed resource+permission pairs",
+      "inclusion": {
+        "status": "included",
+        "reason": "Meets every population criterion (1,753 GitHub stars at its prior repo name, 16,187 npm downloads/week, listed in Docker Catalog/GitHub MCP Registry/Claude connectors). Requires a caller-supplied STRIPE_SECRET_KEY; also one of the 3 required stateful sandboxes (test mode), so a SandboxManifest template is provided in sandboxes/. Local proxy package is @stripe/mcp (docs.stripe.com/mcp), distinct from the @stripe/agent-toolkit repo this row's popularity evidence was measured against."
+      }
+    },
+    {
+      "rank": 17,
+      "name": "Figma",
+      "repo": "https://github.com/GLips/Figma-Context-MCP",
+      "package_or_endpoint": "figma-developer-mcp",
+      "distribution": "npm",
+      "popularity_evidence": "GLips: 15,690★; npm figma-developer-mcp 73,391 dl/week; PulseMCP: community \"Figma Context\" 3.4M all-time vs. official \"Figma\" 111k/week (2.6M all-time); both listed in Docker Catalog + GitHub MCP Registry",
+      "transport": "community: stdio + HTTP; official: HTTP only (remote or desktop-local), gated by an MCP-client allowlist",
+      "auth": "community: FIGMA_API_KEY/OAuth token, env var or per-request header; official remote: OAuth only, no documented static-token fallback; official desktop: no credential concept — trust = whichever account the desktop app is logged into",
+      "annotation_coverage": "community: only 1 of 4 possible annotation keys set per tool (never both readOnlyHint and openWorldHint together, destructiveHint/idempotentHint never used); official: unverifiable (closed-source), and directly contradicts the \"figma is read-only\" assumption — Figma's own docs describe write tools that \"write native Figma content back to the canvas\"",
+      "sandboxable": "community: yes, free PAT; official remote: yes but several tools genuinely mutate; official desktop: not sandboxable headlessly at all",
+      "inclusion": {
+        "status": "included",
+        "reason": "Meets every population criterion (15,690 GitHub stars, 73,391 npm downloads/week, listed in Docker Catalog/GitHub MCP Registry). Requires a caller-supplied FIGMA_API_KEY; credential-free discovery not attempted for this entry."
+      }
+    },
+    {
+      "rank": 18,
+      "name": "Firecrawl",
+      "repo": "https://github.com/firecrawl/firecrawl-mcp-server",
+      "package_or_endpoint": "firecrawl-mcp",
+      "distribution": "npm",
+      "popularity_evidence": "7,282★ (at old org); npm firecrawl-mcp 66,441 dl/week; PulseMCP 167k/week, 3.1M all-time",
+      "transport": "stdio (npx) + hosted remote",
+      "auth": "FIRECRAWL_API_KEY",
+      "annotation_coverage": "Full title/readOnlyHint/openWorldHint/destructiveHint on all 27 tools; idempotentHint on zero tools; firecrawl_scrape's readOnlyHint is env-conditional (Discrepancy 2)",
+      "sandboxable": "Yes — free-tier API key with a credit allotment",
+      "inclusion": {
+        "status": "included",
+        "reason": "Meets every population criterion (7,282 GitHub stars at its prior org, 66,441 npm downloads/week). Requires a caller-supplied FIRECRAWL_API_KEY; credential-free discovery not attempted for this entry (its hosted keyless free tier covers only scrape/search/parse, not DISCOVER's tools/list)."
+      }
+    },
+    {
+      "rank": 19,
+      "name": "PostgreSQL",
+      "repo": "https://github.com/modelcontextprotocol/servers-archived",
+      "package_or_endpoint": "@modelcontextprotocol/server-postgres",
+      "distribution": "npm",
+      "popularity_evidence": "Archived repo ~2,400★ (whole servers-archived repo); crystaldba ~3.2k★; PulseMCP (archived reference) 66.1k/week, 3.5M all-time",
+      "transport": "Both stdio only",
+      "auth": "None at MCP layer — connection string only",
+      "annotation_coverage": "archived: none (predates the ToolAnnotations spec — a single query tool, \"read-only\" only in its description text); crystaldba: partial (title+at most one of readOnlyHint/destructiveHint; never idempotentHint/openWorldHint)",
+      "sandboxable": "Yes trivially, any scratch Postgres connection string; crystaldba additionally ships a Dockerized test harness",
+      "inclusion": {
+        "status": "included",
+        "reason": "Meets every population criterion (archived reference ~2,400 GitHub stars, 66.1k/week PulseMCP, npm package still published). The connection string is a positional CLI argument with no env-var fallback (verified against the saved README), so credential-free discovery is attempted here against a disposable local Postgres container this corpus's own sandbox lifecycle provisions and tears down (sandboxes/lifecycle/postgres-reference.json) -- never a real account's credentials."
+      }
+    },
+    {
+      "rank": 20,
+      "name": "AWS Documentation MCP Server",
+      "repo": "https://github.com/awslabs/mcp",
+      "package_or_endpoint": "awslabs.aws-documentation-mcp-server",
+      "distribution": "pypi",
+      "popularity_evidence": "Parent monorepo 9,600★, 1,796 commits (extremely active); PulseMCP 257k/week, 10.3M all-time — highest weekly figure of any AWS-family server",
+      "transport": "stdio only",
+      "auth": "none",
+      "annotation_coverage": "None — all 5 tools use bare @mcp.tool(), zero hints/title anywhere",
+      "sandboxable": "Yes — public docs only, no credentials/account involved",
+      "inclusion": {
+        "status": "included",
+        "reason": "Meets every population criterion (parent monorepo 9,600 GitHub stars, 257k/week PulseMCP, the highest weekly figure of any AWS-family server checked). No credentials required; publicly runnable via `uvx awslabs.aws-documentation-mcp-server`."
+      }
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "name": "playwright",
+  "transport": "stdio",
+  "command": [
+    "docker",
+    "run",
+    "--rm",
+    "-i",
+    "--network",
+    "bridge",
+    "node:22-alpine",
+    "npx",
+    "-y",
+    "@playwright/mcp",
+    "--headless",
+    "--isolated"
+  ],
+  "args": [],
+  "env_vars": [],
+  "network": "bridge",
+  "package_or_endpoint": "@playwright/mcp"
+}

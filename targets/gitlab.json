@@ -1,0 +1,22 @@
+{
+  "name": "gitlab",
+  "transport": "stdio",
+  "command": [
+    "docker",
+    "run",
+    "--rm",
+    "-i",
+    "--network",
+    "bridge",
+    "node:22-alpine",
+    "npx",
+    "-y",
+    "@zereight/mcp-gitlab"
+  ],
+  "args": [],
+  "env_vars": [
+    "GITLAB_PERSONAL_ACCESS_TOKEN"
+  ],
+  "network": "bridge",
+  "package_or_endpoint": "@zereight/mcp-gitlab"
+}

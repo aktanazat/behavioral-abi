@@ -1,0 +1,23 @@
+{
+  "name": "supabase",
+  "transport": "stdio",
+  "command": [
+    "docker",
+    "run",
+    "--rm",
+    "-i",
+    "--network",
+    "bridge",
+    "node:22-alpine",
+    "npx",
+    "-y",
+    "@supabase/mcp-server-supabase",
+    "--read-only"
+  ],
+  "args": [],
+  "env_vars": [
+    "SUPABASE_ACCESS_TOKEN"
+  ],
+  "network": "bridge",
+  "package_or_endpoint": "@supabase/mcp-server-supabase"
+}

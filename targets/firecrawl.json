@@ -1,0 +1,22 @@
+{
+  "name": "firecrawl",
+  "transport": "stdio",
+  "command": [
+    "docker",
+    "run",
+    "--rm",
+    "-i",
+    "--network",
+    "bridge",
+    "node:22-alpine",
+    "npx",
+    "-y",
+    "firecrawl-mcp"
+  ],
+  "args": [],
+  "env_vars": [
+    "FIRECRAWL_API_KEY"
+  ],
+  "network": "bridge",
+  "package_or_endpoint": "firecrawl-mcp"
+}

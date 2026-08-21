@@ -1,0 +1,21 @@
+{
+  "target_label": "github-disposable-repo",
+  "setup_command": [
+    "gh",
+    "repo",
+    "create",
+    "{resource_prefix}{run_id}",
+    "--private"
+  ],
+  "teardown_command": [
+    "gh",
+    "repo",
+    "delete",
+    "{resource_prefix}{run_id}",
+    "--yes"
+  ],
+  "env_vars": [
+    "GH_TOKEN"
+  ],
+  "timeout_seconds": 30
+}

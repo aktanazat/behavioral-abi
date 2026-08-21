@@ -1,0 +1,19 @@
+{
+  "name": "fetch",
+  "transport": "stdio",
+  "command": [
+    "docker",
+    "run",
+    "--rm",
+    "-i",
+    "--network",
+    "bridge",
+    "ghcr.io/astral-sh/uv:python3.13-bookworm-slim",
+    "uvx",
+    "mcp-server-fetch"
+  ],
+  "args": [],
+  "env_vars": [],
+  "network": "bridge",
+  "package_or_endpoint": "mcp-server-fetch"
+}
