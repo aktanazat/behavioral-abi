@@ -1,0 +1,21 @@
+{
+  "name": "filesystem",
+  "transport": "stdio",
+  "command": [
+    "docker",
+    "run",
+    "--rm",
+    "-i",
+    "--network",
+    "bridge",
+    "node:22-alpine",
+    "npx",
+    "-y",
+    "@modelcontextprotocol/server-filesystem",
+    "/tmp"
+  ],
+  "args": [],
+  "env": {},
+  "network": "bridge",
+  "package_or_endpoint": "@modelcontextprotocol/server-filesystem"
+}

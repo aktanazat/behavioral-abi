@@ -6,12 +6,20 @@ import argparse
 import asyncio
 import json
 import sys
-from datetime import datetime, timezone
+from importlib.metadata import version as _pkg_version
 from pathlib import Path
 
-from babi.evidence import build_evidence
-from babi.manifest import ManifestPolicyError, load_manifest_file
-from babi.mcp_stdio import collect_stdio_session
+from mcp import types
+from pydantic import ValidationError
+
+from babi.canon import Json
+from babi.collect import build_discover_bundle, discover, gather_runtime_digests
+from babi.evidence import EvidenceStore
+from babi.manifest import SandboxManifest
+from babi.target import TargetSpec
+
+_SUPPORTED_POLICIES = ("safe-v0",)
+_CLIENT_INFO = types.Implementation(name="babi", version=_pkg_version("babi"))
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -21,92 +29,103 @@ def main(argv: list[str] | None = None) -> int:
 
 def _build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(prog="babi", description="Behavioral ABI measurement CLI.")
-    subparsers = parser.add_subparsers(required=True)
+    subparsers = parser.add_subparsers(dest="command", required=True)
 
-    collect = subparsers.add_parser(
-        "collect",
-        help="Collect initialize + tools/list evidence from a stdio MCP server command.",
-        description=(
-            "Launch COMMAND as an MCP stdio server, capture its negotiated "
-            "session metadata and full tool catalog, and write a canonical "
-            "evidence directory. Put babi's own options before COMMAND; "
-            "everything from COMMAND onward is passed through to the server."
-        ),
+    probe = subparsers.add_parser(
+        "probe",
+        help="Discover one MCP target's tool catalog and store a signed-identity evidence bundle.",
     )
-    collect.add_argument("--out", type=Path, default=None, help="Evidence directory (default: .artifacts/<subject-digest>).")
-    collect.add_argument("--env", action="append", default=[], metavar="NAME=VALUE", help="Environment variable for the server process; may repeat.")
-    collect.add_argument("--cwd", default=None, help="Working directory for the server process.")
-    collect.add_argument("command", help="Executable to launch as the MCP stdio server.")
-    collect.add_argument("args", nargs=argparse.REMAINDER, help="Arguments passed through to the server command.")
-    collect.set_defaults(handler=_run_collect)
+    probe.add_argument("target", type=Path, help="Path to a targets/*.json file.")
+    probe.add_argument(
+        "--sandbox",
+        type=Path,
+        default=None,
+        help="Path to a sandboxes/*.json disposable-scope manifest (optional for local stdio discovery).",
+    )
+    probe.add_argument(
+        "--policy", default="safe-v0", help="Execution policy; only 'safe-v0' (DISCOVER-only) exists so far."
+    )
+    probe.add_argument(
+        "--evidence-root", type=Path, default=None, help="Evidence store root (default: ./evidence)."
+    )
+    probe.set_defaults(handler=_run_probe)
 
-    manifest_check = subparsers.add_parser(
-        "manifest-check",
-        help="Validate a sandbox manifest against the environment-scope policy.",
-    )
-    manifest_check.add_argument("manifest", type=Path, help="Path to a sandbox manifest JSON file.")
-    manifest_check.set_defaults(handler=_run_manifest_check)
+    lint = subparsers.add_parser("lint", help="Run the no-per-tool-logic policy linter.")
+    lint.add_argument("--root", default=".", help="Repository root to lint.")
+    lint.set_defaults(handler=_run_lint)
 
     return parser
 
 
-def _run_collect(args: argparse.Namespace) -> int:
-    env = dict(_parse_env_assignment(item) for item in args.env) or None
-    started_at = datetime.now(timezone.utc)
-    raw = asyncio.run(collect_stdio_session(args.command, args.args, env=env, cwd=args.cwd))
-    finished_at = datetime.now(timezone.utc)
+def _run_probe(args: argparse.Namespace) -> int:
+    if args.policy not in _SUPPORTED_POLICIES:
+        print(f"error: unknown policy {args.policy!r}; supported: {', '.join(_SUPPORTED_POLICIES)}", file=sys.stderr)
+        return 2
 
-    bundle = build_evidence(
-        command=args.command,
-        args=args.args,
-        initialize_result=raw.initialize_result,
-        tools=raw.tools,
-        started_at=started_at,
-        finished_at=finished_at,
-    )
-    subject_digest = bundle.subject["subject_digest"]
-    out_dir = args.out or Path(".artifacts") / subject_digest.split(":", 1)[1]
-    bundle.write(out_dir)
-
-    print(
-        json.dumps(
-            {
-                "evidence_dir": str(out_dir),
-                "subject_digest": subject_digest,
-                "tool_count": bundle.subject["tool_count"],
-                "tools_digest": bundle.subject["tools_digest"],
-            },
-            sort_keys=True,
-        )
-    )
-    return 0
-
-
-def _parse_env_assignment(item: str) -> tuple[str, str]:
-    name, sep, value = item.partition("=")
-    if not sep:
-        raise SystemExit(f"--env expects NAME=VALUE, got {item!r}")
-    return name, value
-
-
-def _run_manifest_check(args: argparse.Namespace) -> int:
     try:
-        manifest = load_manifest_file(args.manifest)
-    except ManifestPolicyError as exc:
-        print(
-            json.dumps(
-                {
-                    "ok": False,
-                    "violations": [
-                        {"field": v.field, "kind": v.kind, "reason": v.reason} for v in exc.violations
-                    ],
-                },
-                sort_keys=True,
-            )
-        )
-        return 1
-    print(json.dumps({"ok": True, "target_label": manifest.target_label}, sort_keys=True))
+        target = TargetSpec.model_validate(json.loads(args.target.read_text(encoding="utf-8")))
+    except ValidationError as error:
+        print(f"error: invalid target {args.target}: {error}", file=sys.stderr)
+        return 2
+
+    if args.sandbox is not None:
+        try:
+            SandboxManifest.model_validate(json.loads(args.sandbox.read_text(encoding="utf-8")))
+        except ValidationError as error:
+            print(f"error: invalid sandbox manifest {args.sandbox}: {error}", file=sys.stderr)
+            return 2
+    elif target.transport != "stdio":
+        print("error: --sandbox is required for non-stdio (remote/stateful) targets", file=sys.stderr)
+        return 2
+
+    discovery = asyncio.run(discover(target, client_info=_CLIENT_INFO))
+    runtime_digests = gather_runtime_digests(target)
+    bundle = build_discover_bundle(discovery, runtime_digests=runtime_digests)
+
+    store = EvidenceStore(args.evidence_root) if args.evidence_root is not None else EvidenceStore()
+    bundle_digest = store.put_json(bundle)
+
+    _print_report(bundle, bundle_digest)
     return 0
+
+
+def _print_report(bundle: dict[str, Json], bundle_digest: str) -> None:
+    print(f"target: {bundle['run']['target_name']} ({bundle['transport']}, {bundle['package_or_endpoint']})")
+    print(f"negotiated protocol revision: {bundle['negotiated_protocol_revision']}")
+    server_info = bundle["server_info"] or {}
+    print(f"server info: {server_info.get('name', '<none>')} {server_info.get('version', '')}".rstrip())
+    print(f"server_subject: {bundle['server_subject']}")
+    print(f"evidence bundle: {bundle_digest}")
+    print()
+    header = f"{'tool':<28} {'readOnly':<9} {'destructive':<12} {'idempotent':<11} {'openWorld':<10} tool_subject"
+    print(header)
+    print("-" * len(header))
+    tools_by_name = {tool["name"]: tool for tool in bundle["tools_list"]}
+    for name in sorted(bundle["tool_subjects"]):
+        tool = tools_by_name.get(name, {})
+        annotations = tool.get("annotations") or {}
+        digest = bundle["tool_subjects"][name]
+        print(
+            f"{name:<28} "
+            f"{_fmt(annotations.get('readOnlyHint')):<9} "
+            f"{_fmt(annotations.get('destructiveHint')):<12} "
+            f"{_fmt(annotations.get('idempotentHint')):<11} "
+            f"{_fmt(annotations.get('openWorldHint')):<10} "
+            f"{digest}"
+        )
+
+
+def _fmt(value: bool | None) -> str:
+    return "-" if value is None else str(value).lower()
+
+
+def _run_lint(args: argparse.Namespace) -> int:
+    from babi.lint import lint  # lazy: `babi probe` must keep working even if lint.py is broken/absent
+
+    violations = lint(root=args.root)
+    for violation in violations:
+        print(violation, file=sys.stderr)
+    return 1 if violations else 0
 
 
 if __name__ == "__main__":

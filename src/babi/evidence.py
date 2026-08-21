@@ -1,106 +1,52 @@
-"""Evidence-directory construction: canonical tool catalog, subject digest, and
-run metadata, built uniformly from whatever the SDK returned.
+"""Content-addressed evidence store.
 
-Nothing in this module branches on a tool or server name. Every document is
-produced by applying the same fixed transform to the SDK's response objects.
+Layout: `<root>/sha256/<hex[:2]>/<hex>`. Writes are atomic (temp file in the
+same directory, then rename) and write-once: writing an already-present
+digest is a no-op, since the content -- and therefore the digest -- can
+only be identical.
 """
 
 from __future__ import annotations
 
-import platform
-from collections.abc import Sequence
-from dataclasses import dataclass
-from datetime import datetime
-from importlib.metadata import version as _pkg_version
+import hashlib
+import os
+import tempfile
 from pathlib import Path
-from typing import Any
 
-from mcp import types
+from babi import canon
 
-from babi.canonical import canonical_json_bytes, digest_of
-
-_BABI_VERSION = _pkg_version("babi")
-_MCP_SDK_VERSION = _pkg_version("mcp")
+DEFAULT_ROOT = Path("evidence")
 
 
-def _dump(model: Any) -> dict[str, Any]:
-    """Wire-shaped (camelCase, no-null) dict for one pydantic MCP model."""
-    return model.model_dump(by_alias=True, exclude_none=True, mode="json")
+class EvidenceStore:
+    def __init__(self, root: Path | str = DEFAULT_ROOT) -> None:
+        self.root = Path(root)
 
+    def path(self, digest: str) -> Path:
+        algo, sep, hex_digest = digest.partition(":")
+        if not sep or algo != "sha256" or len(hex_digest) != 64:
+            raise ValueError(f"not a sha256 digest: {digest!r}")
+        return self.root / "sha256" / hex_digest[:2] / hex_digest
 
-def canonical_tool_catalog(tools: Sequence[types.Tool]) -> list[dict[str, Any]]:
-    """Canonical tool-catalog artifact.
+    def put_bytes(self, data: bytes) -> str:
+        digest = f"sha256:{hashlib.sha256(data).hexdigest()}"
+        target = self.path(digest)
+        if target.exists():
+            return digest
 
-    Every tool's full wire representation (name, description, inputSchema,
-    outputSchema, annotations, _meta, and any other field the SDK exposes),
-    sorted by name so the artifact — and any digest over it — is independent
-    of the page order a server happened to return.
-    """
-    dumped = [_dump(tool) for tool in tools]
-    return sorted(dumped, key=lambda tool: tool["name"])
+        target.parent.mkdir(parents=True, exist_ok=True)
+        fd, tmp_name = tempfile.mkstemp(dir=target.parent, prefix=".tmp-")
+        try:
+            with os.fdopen(fd, "wb") as tmp_file:
+                tmp_file.write(data)
+            os.replace(tmp_name, target)
+        except BaseException:
+            Path(tmp_name).unlink(missing_ok=True)
+            raise
+        return digest
 
+    def put_json(self, obj: canon.Json) -> str:
+        return self.put_bytes(canon.canonical_json(obj))
 
-@dataclass(frozen=True, slots=True)
-class EvidenceBundle:
-    """The three canonical documents written to one evidence directory."""
-
-    tools: list[dict[str, Any]]
-    subject: dict[str, Any]
-    run: dict[str, Any]
-
-    def write(self, directory: Path) -> None:
-        """Write `tools.json`, `subject.json`, and `run.json` into `directory`."""
-        directory.mkdir(parents=True, exist_ok=True)
-        _write_canonical(directory / "tools.json", self.tools)
-        _write_canonical(directory / "subject.json", self.subject)
-        _write_canonical(directory / "run.json", self.run)
-
-
-def _write_canonical(path: Path, value: Any) -> None:
-    path.write_bytes(canonical_json_bytes(value) + b"\n")
-
-
-def build_evidence(
-    *,
-    command: str,
-    args: Sequence[str],
-    initialize_result: types.InitializeResult,
-    tools: Sequence[types.Tool],
-    started_at: datetime,
-    finished_at: datetime,
-) -> EvidenceBundle:
-    """Build the tools/subject/run documents for one collected session.
-
-    `started_at`/`finished_at` land only in `run`; they never reach the
-    subject payload, so the subject digest is stable across repeated runs of
-    the same target even though every run happens at a different time.
-    """
-    tool_catalog = canonical_tool_catalog(tools)
-    tools_digest = digest_of(tool_catalog)
-
-    resolved_command = {"command": command, "args": list(args)}
-    server_info = _dump(initialize_result.server_info)
-
-    subject_payload = {
-        "resolved_command": resolved_command,
-        "protocol_version": initialize_result.protocol_version,
-        "server_info": server_info,
-        "tools_digest": tools_digest,
-        "tool_count": len(tool_catalog),
-    }
-    subject_digest = digest_of(subject_payload)
-    subject = {"subject_digest": subject_digest, **subject_payload}
-
-    run = {
-        "subject_digest": subject_digest,
-        "tools_digest": tools_digest,
-        "tool_count": len(tool_catalog),
-        "resolved_command": resolved_command,
-        "started_at": started_at.isoformat(),
-        "finished_at": finished_at.isoformat(),
-        "initialize_result": _dump(initialize_result),
-        "babi_version": _BABI_VERSION,
-        "mcp_sdk_version": _MCP_SDK_VERSION,
-        "python_version": platform.python_version(),
-    }
-    return EvidenceBundle(tools=tool_catalog, subject=subject, run=run)
+    def get(self, digest: str) -> bytes:
+        return self.path(digest).read_bytes()

@@ -1,0 +1,22 @@
+{
+  "name": "memory",
+  "transport": "stdio",
+  "command": [
+    "docker",
+    "run",
+    "--rm",
+    "-i",
+    "--network",
+    "bridge",
+    "-e",
+    "MEMORY_FILE_PATH=/tmp/memory.json",
+    "node:22-alpine",
+    "npx",
+    "-y",
+    "@modelcontextprotocol/server-memory"
+  ],
+  "args": [],
+  "env": {},
+  "network": "bridge",
+  "package_or_endpoint": "@modelcontextprotocol/server-memory"
+}
