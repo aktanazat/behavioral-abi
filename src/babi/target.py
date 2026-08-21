@@ -7,9 +7,11 @@ operation should do.
 
 from __future__ import annotations
 
-from typing import Literal
+from typing import Annotated, Literal
 
-from pydantic import BaseModel, ConfigDict, Field, model_validator
+from pydantic import BaseModel, ConfigDict, Field, StringConstraints, model_validator
+
+EnvironmentVariableName = Annotated[str, StringConstraints(pattern=r"^[A-Za-z_][A-Za-z0-9_]*$")]
 
 
 class TargetSpec(BaseModel):
@@ -20,7 +22,7 @@ class TargetSpec(BaseModel):
     command: list[str] | None = None
     endpoint: str | None = None
     args: list[str] = Field(default_factory=list)
-    env: dict[str, str] = Field(default_factory=dict)
+    env_vars: list[EnvironmentVariableName] = Field(default_factory=list)
     network: Literal["none", "bridge"]
     package_or_endpoint: str
 

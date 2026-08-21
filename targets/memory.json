@@ -16,7 +16,7 @@
     "@modelcontextprotocol/server-memory"
   ],
   "args": [],
-  "env": {},
+  "env_vars": [],
   "network": "bridge",
   "package_or_endpoint": "@modelcontextprotocol/server-memory"
 }

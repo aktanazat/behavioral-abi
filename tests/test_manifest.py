@@ -32,6 +32,11 @@ def test_rubric_allowed_disposable_fields_accepted() -> None:
     assert manifest.credential_env_vars == ["STRIPE_TEST_KEY"]
 
 
+def test_credential_values_cannot_hide_in_environment_names() -> None:
+    with pytest.raises(ValidationError):
+        SandboxManifest.model_validate(_base(credential_env_vars=["STRIPE_TEST_KEY=secret"]))
+
+
 def test_extra_field_forbidden() -> None:
     with pytest.raises(ValidationError):
         SandboxManifest.model_validate(_base(some_random_field="x"))

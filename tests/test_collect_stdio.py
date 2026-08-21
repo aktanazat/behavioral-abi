@@ -23,7 +23,7 @@ def _fixture_target() -> TargetSpec:
         transport="stdio",
         command=[sys.executable, str(FIXTURE_SERVER)],
         args=[],
-        env={},
+        env_vars=[],
         network="bridge",
         package_or_endpoint="fake-fixture-server",
     )

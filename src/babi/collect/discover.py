@@ -7,6 +7,7 @@ self-identification.
 
 from __future__ import annotations
 
+import os
 from dataclasses import dataclass
 from datetime import datetime, timezone
 
@@ -15,6 +16,8 @@ from mcp.client import Client, Transport
 from mcp.client.stdio import StdioServerParameters, stdio_client
 
 from babi.target import TargetSpec
+
+_BASE_ENVIRONMENT_NAMES = ("HOME", "LANG", "LC_ALL", "PATH", "TMPDIR")
 
 
 @dataclass(frozen=True, slots=True)
@@ -33,10 +36,23 @@ class Discovery:
 def _transport(target: TargetSpec) -> Transport | str:
     if target.transport == "stdio":
         argv = [*(target.command or []), *target.args]
-        params = StdioServerParameters(command=argv[0], args=argv[1:], env=dict(target.env) or None)
+        params = StdioServerParameters(
+            command=argv[0],
+            args=argv[1:],
+            env=_stdio_environment(target),
+        )
         return stdio_client(params)
     assert target.endpoint is not None  # TargetSpec's validator guarantees this whenever transport isn't stdio
     return target.endpoint
+
+
+def _stdio_environment(target: TargetSpec) -> dict[str, str]:
+    missing = [name for name in target.env_vars if name not in os.environ]
+    if missing:
+        raise ValueError(f"target environment variables are unset: {', '.join(missing)}")
+
+    names = (*_BASE_ENVIRONMENT_NAMES, *target.env_vars)
+    return {name: os.environ[name] for name in names if name in os.environ}
 
 
 async def discover(target: TargetSpec, *, client_info: types.Implementation) -> Discovery:

@@ -11,6 +11,8 @@ from __future__ import annotations
 
 from pydantic import BaseModel, ConfigDict, Field
 
+from babi.target import EnvironmentVariableName
+
 
 class SandboxManifest(BaseModel):
     model_config = ConfigDict(extra="forbid")
@@ -21,4 +23,4 @@ class SandboxManifest(BaseModel):
     resource_prefix: str | None = None
     spend_limit: float | None = None
     teardown_deadline: str | None = None
-    credential_env_vars: list[str] = Field(default_factory=list)
+    credential_env_vars: list[EnvironmentVariableName] = Field(default_factory=list)

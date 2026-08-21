@@ -41,10 +41,20 @@ def test_requires_exactly_one_of_command_or_endpoint_both_set() -> None:
         TargetSpec.model_validate(_base(endpoint="https://example.test/mcp"))
 
 
-def test_env_defaults_empty_and_accepts_string_values() -> None:
-    target = TargetSpec.model_validate(_base(env={"NODE_ENV": "test"}))
-    assert target.env == {"NODE_ENV": "test"}
-    assert TargetSpec.model_validate(_base()).env == {}
+def test_env_vars_default_empty_and_accept_names_only() -> None:
+    target = TargetSpec.model_validate(_base(env_vars=["NODE_ENV"]))
+    assert target.env_vars == ["NODE_ENV"]
+    assert TargetSpec.model_validate(_base()).env_vars == []
+
+
+def test_literal_environment_values_are_forbidden() -> None:
+    with pytest.raises(ValidationError):
+        TargetSpec.model_validate(_base(env={"NODE_ENV": "test"}))
+
+
+def test_invalid_environment_variable_name_is_forbidden() -> None:
+    with pytest.raises(ValidationError):
+        TargetSpec.model_validate(_base(env_vars=["NODE_ENV=secret"]))
 
 
 def test_extra_field_forbidden() -> None:
