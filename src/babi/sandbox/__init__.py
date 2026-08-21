@@ -32,7 +32,7 @@ from babi.sandbox.runner import (
     run_targets,
     valid_first_call_rate,
 )
-from babi.sandbox.synthesize import synthesize_arguments, validates
+from babi.sandbox.synthesize import validates
 
 __all__ = [
     "Corpus",
@@ -58,7 +58,6 @@ __all__ = [
     "run_setup",
     "run_targets",
     "run_teardown",
-    "synthesize_arguments",
     "valid_first_call_rate",
     "validates",
 ]

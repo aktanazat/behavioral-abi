@@ -82,18 +82,7 @@ def _protocol_for(discovery_bundle: dict[str, Json]) -> str:
     return "mcp" if discovery_bundle.get("transport") in _KNOWN_MCP_TRANSPORTS else "other"
 
 
-def _idempotent_value(claim: PropertyClaim | None) -> bool | str:
-    if claim is None:
-        return "unknown"
-    status = _enum_value(claim.status)
-    if status == PropertyStatus.observed_true.value:
-        return True
-    if status == PropertyStatus.observed_false.value:
-        return False
-    return "unknown"
-
-
-def _reversible_value(claim: PropertyClaim | None) -> bool | str:
+def _observed_value(claim: PropertyClaim | None) -> bool | str:
     if claim is None:
         return "unknown"
     status = _enum_value(claim.status)
@@ -173,8 +162,8 @@ class ContractEmitter:
             vendor_declared=dict(tool_def.get("annotations") or {}),
         )
         observed = Observed(
-            idempotent=_idempotent_value(claims_by_property.get(_RETRY_PROPERTY)),
-            reversible=_reversible_value(claims_by_property.get("reversible")),
+            idempotent=_observed_value(claims_by_property.get(_RETRY_PROPERTY)),
+            reversible=_observed_value(claims_by_property.get("reversible")),
             side_effects=_side_effects(classification),
             consistency=Consistency(),
         )

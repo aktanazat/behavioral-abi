@@ -1,25 +1,4 @@
-"""Corpus runner: discovery plus a deterministic first-call check across
-targets, with bounded concurrency and timeouts.
-
-Two phases per target, both read-only against the target (RUBRIC.md Days
-3-4: "Run against the 20-server catalog without stateful mutations"):
-
-1. DISCOVER (`babi.collect.discover`) -- connect, capture the tool catalog.
-2. For each discovered tool, deterministically synthesize a minimal
-   first-call argument set from its own `inputSchema` (preferring the
-   shared generic planner's `babi.planner.synthesize_call` once available,
-   falling back to this package's own schema-only generator) and check
-   whether that synthesized value actually validates against the same
-   schema it came from.
-
-Every tool lands in exactly one of three buckets -- `success`, `invalid`,
-`inconclusive` -- and every target lands in exactly one of three outcomes.
-A target whose declared `env_vars` don't resolve in the ambient
-environment is `credentials_unavailable`, always, everywhere a failure
-could otherwise be misclassified: RUBRIC.md kill condition 2 is about the
-planner's own competence, and an absent credential is never evidence about
-that.
-"""
+"""Run deterministic first-call checks across the frozen corpus."""
 
 from __future__ import annotations
 
@@ -37,8 +16,9 @@ from pydantic import BaseModel, ConfigDict, Field, model_validator
 from babi.canon import Json
 from babi.collect import build_discover_bundle, discover
 from babi.evidence import EvidenceStore
+from babi.planner import synthesize_call
 from babi.sandbox.credentials import MissingCredentialsError, missing_credentials, redact, require_credentials
-from babi.sandbox.synthesize import synthesize_arguments, validates
+from babi.sandbox.synthesize import validates
 from babi.target import TargetSpec
 
 _BABI_VERSION = _pkg_version("babi")
@@ -185,30 +165,13 @@ def _now_iso() -> str:
     return datetime.now(timezone.utc).isoformat()
 
 
-def _synthesize_first_call(tool: dict[str, Json], *, include_optional: bool) -> tuple[bool, dict[str, Json], str]:
-    """Prefer the shared generic planner's value synthesizer
-    (`babi.planner.synthesize_call`) once it exists; fall back to this
-    package's own minimal schema-driven generator otherwise. Both are
-    pure and deterministic, driven only by `tool`'s own wire definition.
-    Returns `(ok, arguments, source)`; `source` is diagnostic only."""
-    try:
-        from babi.planner import synthesize_call  # type: ignore[import-not-found]
-    except ImportError:
-        pass
-    else:
-        try:
-            arguments = synthesize_call(tool, include_optional=include_optional)
-        except Exception:  # noqa: BLE001 -- any planner failure just falls through to the local generator
-            pass
-        else:
-            if isinstance(arguments, dict):
-                return True, arguments, "planner"
-
+def _synthesize_first_call(
+    tool: dict[str, Json], *, include_optional: bool
+) -> tuple[bool, dict[str, Json], str]:
     input_schema = tool.get("inputSchema")
     if not isinstance(input_schema, dict):
-        return False, {}, "fallback"
-    ok, arguments = synthesize_arguments(input_schema, include_optional=include_optional)
-    return ok, (arguments if ok else {}), "fallback"
+        return False, {}, "planner"
+    return True, synthesize_call(tool, include_optional=include_optional), "planner"
 
 
 def _plan_tool(tool: dict[str, Json], tool_subject_digest: str, *, include_optional: bool) -> ToolPlanResult:
